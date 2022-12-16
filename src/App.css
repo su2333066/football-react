@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  clear: both;
+  margin: 0 auto;
+  width: 100%;
+  zoom: 1;
+  height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* navbar */
+.navbar .navContainer {
+  max-width: 1024px;
+  height: 56px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar .navContainer .navLogo {
+  margin: auto 0;
+}
+
+.navbar .navContainer .navRight {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  padding: 0 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.navbar .navContainer .navRight .navSearch {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 6px;
+  background-color: #f7f7f7;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (min-width: 600px) {
+  .navSearch {
+    width: 450px !important;
+    margin: 0;
+    display: inline-block;
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+.navbar .navContainer .navRight .navSearch button {
+  background-color: #f7f7f7;
+  border-radius: 6px;
+}
+
+.navbar .navContainer .navRight .navSearch input {
+  width: calc(100% - 60px);
+  background-color: #f7f7f7;
+  border: 0;
+  outline: 0;
+}
+
+.navbar .navContainer .navRight button {
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 8px;
+}
+
+.navbar .navContainer .navRight img {
+  width: 24px;
+  height: 24px;
 }
