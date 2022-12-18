@@ -75,3 +75,19 @@
   width: 24px;
   height: 24px;
 }
+
+/* slide */
+.sliderContainer {
+  background-color: #f2f5f7;
+  border-bottom: 1px solid #ddd;
+}
+
+.sliderBox {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.sliderBox img {
+  border-radius: 20px;
+}
