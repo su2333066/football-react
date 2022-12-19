@@ -91,3 +91,135 @@
 .sliderBox img {
   border-radius: 20px;
 }
+
+/* login */
+.loginOrJoinContainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginOrJoinInner {
+  min-width: 720px;
+  padding: 20px;
+  height: 100%;
+}
+
+.loginOrJoinInner .inner {
+  height: 70% !important;
+  max-width: 480px;
+  margin: 0 auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.headMessage {
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.headMessage h2 {
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 120%;
+}
+
+.headMessage .hlt {
+  color: #1739aa;
+  font-weight: 700;
+}
+
+.loginOrJoinInner .inner > span {
+  font-size: 13px;
+  color: #4b5a64;
+  text-align: center;
+}
+
+.checkbox {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 22px;
+  height: 22px;
+  background: #e6ecf1;
+  border-radius: 6px;
+  border: 1px solid #d9e0e6;
+}
+
+.loginOrJoinInner .inner label span {
+  font-size: 13px;
+  color: #4b5a64;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.loginOrJoinInner input {
+  border: 1px solid #d9e0e6;
+  background-color: #f2f5f7;
+  margin-bottom: 10px;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 16px;
+  padding: 5px 15px;
+  box-sizing: border-box;
+}
+
+.loginOrJoinInner button {
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 100%;
+  font-size: 16px;
+  color: white;
+  background-color: #1739aa;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.loginOrJoinInner .level {
+  display: flex;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.loginOrJoinInner .levelCheck {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.loginOrJoinInner .level button {
+  margin-left: 10px;
+  padding: 8px 12px;
+  border: 0;
+  outline: 0;
+  font-size: 12px;
+  background-color: #f2f5f7;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.loginOrJoinInner .level .button-active {
+  background-color: #1739aa;
+}
+
+.inner .joinBtn,
+.kakaoBtn {
+  cursor: pointer;
+}
+
+.loginOrJoinKakao {
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #fee500;
+  border-radius: 10px;
+  padding: 15px 0px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.loginOrJoinKakao img {
+  vertical-align: middle;
+}

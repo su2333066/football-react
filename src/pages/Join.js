@@ -4,6 +4,29 @@ import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
+const levelButtons = [
+  {
+    name: "루키",
+    value: 1,
+  },
+  {
+    name: "비기너",
+    value: 2,
+  },
+  {
+    name: "아마추어",
+    value: 3,
+  },
+  {
+    name: "세미프로",
+    value: 4,
+  },
+  {
+    name: "프로",
+    value: 5,
+  },
+];
+
 function Join() {
   const [data, setData] = React.useState({});
 
@@ -31,27 +54,104 @@ function Join() {
     });
   };
 
+  console.log(data);
+
   return (
-    <div>
-      <input
-        name="id"
-        placeholder="아이디 입력해주세요"
-        onChange={데이터변경}
-      />
-      <input
-        name="nickname"
-        placeholder="닉네임을 입력해주세요"
-        onChange={데이터변경}
-      />
-      <input
-        type="password"
-        name="pw"
-        placeholder="비밀번호를 입력해주세요"
-        onChange={데이터변경}
-      />
-      <button type="button" onClick={가입하기}>
-        가입
-      </button>
+    <div className="container">
+      <div className="navbar">
+        <div className="navContainer">
+          <div className="navLogo">
+            <a href="/">
+              <img
+                src="https://plab-football.s3.amazonaws.com/static/img/logo.svg"
+                alt="플랩풋볼"
+              ></img>
+            </a>
+          </div>
+          <div className="navRight">
+            <div className="navSearch">
+              <button>
+                <img
+                  src="https://plab-football.s3.amazonaws.com/static/img/ic_search.svg"
+                  alt="내정보"
+                ></img>
+              </button>
+              <input
+                type="search"
+                maxlength="100"
+                autocomplete="off"
+                placeholder="지역, 구장 이름으로 찾기"
+              ></input>
+            </div>
+            <button>
+              <img
+                src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
+                alt="더보기"
+              ></img>
+            </button>
+            <button>•••</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="loginOrJoinContainer">
+        <div className="loginOrJoinImg"></div>
+        <div className="loginOrJoinInner">
+          <div className="inner">
+            <div className="headMessage">
+              <h2>풋살하고싶을땐</h2>
+              <h2 className="hlt">플랩풋볼</h2>
+            </div>
+            <input
+              name="id"
+              placeholder="아이디를 입력해주세요"
+              onChange={데이터변경}
+            />
+            <input
+              name="name"
+              placeholder="이름을 입력해주세요"
+              onChange={데이터변경}
+            />
+            <span className="levelCheck">Level Check</span>
+            <div className="level">
+              {levelButtons.map((item, index) => {
+                const className =
+                  data.level == item.value ? "button-active" : "";
+
+                return (
+                  <button
+                    name="level"
+                    type="radio"
+                    className={className}
+                    key={`levelButtons-${index}`}
+                    value={item.value}
+                    onClick={데이터변경}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
+            <input
+              type="password"
+              name="pw"
+              placeholder="비밀번호를 입력해주세요"
+              onChange={데이터변경}
+            />
+
+            <button type="button" onClick={가입하기}>
+              회원가입
+            </button>
+          </div>
+          <div className="loginOrJoinKakao">
+            <img
+              src="https://plab-football.s3.amazonaws.com/static/img/ic_kakao.svg"
+              alt="카카오이메일"
+            ></img>
+            <span className="kakaoBtn"> 카카오 로그인</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

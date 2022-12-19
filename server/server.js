@@ -100,7 +100,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/join", async (req, res) => {
-  const { id, nickname, pw } = req.body;
+  const { id, name, level, pw } = req.body;
 
   const result = {
     code: "success",
@@ -130,7 +130,7 @@ app.post("/join", async (req, res) => {
   }
 
   await 디비실행(
-    `INSERT INTO user(id,password,nickname) VALUES('${id}','${pw}','${nickname}')`
+    `INSERT INTO user(id,password,name,level) VALUES('${id}','${pw}','${name}','${level}')`
   );
 
   res.send(result);
