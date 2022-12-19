@@ -92,21 +92,21 @@
   border-radius: 20px;
 }
 
-/* login */
-.loginOrJoinContainer {
+/* login, join, match */
+.contentContainer {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.loginOrJoinInner {
+.contentInner {
   min-width: 720px;
   padding: 20px;
   height: 100%;
 }
 
-.loginOrJoinInner .inner {
+.contentInner .inner {
   height: 70% !important;
   max-width: 480px;
   margin: 0 auto;
@@ -131,7 +131,7 @@
   font-weight: 700;
 }
 
-.loginOrJoinInner .inner > span {
+.contentInner .inner > span {
   font-size: 13px;
   color: #4b5a64;
   text-align: center;
@@ -148,14 +148,14 @@
   border: 1px solid #d9e0e6;
 }
 
-.loginOrJoinInner .inner label span {
+.contentInner .inner label span {
   font-size: 13px;
   color: #4b5a64;
   text-align: center;
   margin-bottom: 10px;
 }
 
-.loginOrJoinInner input {
+.contentInner input {
   border: 1px solid #d9e0e6;
   background-color: #f2f5f7;
   margin-bottom: 10px;
@@ -166,7 +166,18 @@
   box-sizing: border-box;
 }
 
-.loginOrJoinInner button {
+.input {
+  border: 1px solid #d9e0e6;
+  background-color: #f2f5f7;
+  margin-bottom: 10px;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 16px;
+  padding: 5px 15px;
+  box-sizing: border-box;
+}
+
+.contentInner button {
   border: none;
   cursor: pointer;
   border-radius: 12px;
@@ -178,18 +189,18 @@
   margin-bottom: 10px;
 }
 
-.loginOrJoinInner .level {
+.contentInner .level {
   display: flex;
   padding: 8px 12px;
   margin-bottom: 10px;
 }
 
-.loginOrJoinInner .levelCheck {
+.contentInner .levelCheck {
   font-size: 16px;
   font-weight: bold;
 }
 
-.loginOrJoinInner .level button {
+.contentInner .level button {
   margin-left: 10px;
   padding: 8px 12px;
   border: 0;
@@ -200,7 +211,7 @@
   font-weight: bold;
 }
 
-.loginOrJoinInner .level .button-active {
+.contentInner .level .button-active {
   background-color: #1739aa;
 }
 
@@ -222,4 +233,20 @@
 
 .loginOrJoinKakao img {
   vertical-align: middle;
+}
+
+.matchBtn {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+  padding: 20px;
+  border: 0;
+  outline: 0;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.matchContainer {
+  display: flex;
+  flex-direction: column;
 }

@@ -2,9 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const mysql = require("mysql2");
+
 const db = mysql.createPoolCluster();
 
+// const cron = require("node-cron");
+
 const app = express();
+
 const port = 4000;
 
 app.use(express.json());
@@ -53,8 +57,22 @@ function 디비실행(query) {
   });
 }
 
+// cron.schedule("* * * * *", function () {
+//   console.log("매 분 마다 작업 실행");
+// });
+
+// cron.schedule("* * * * * *", function () {
+//   console.log("매 초 마다 작업 실행 :", new Date().toString());
+// });
+
 app.get("/", (req, res) => {
   res.send("Hello");
+});
+
+app.get("/detail", async (req, res) => {
+  const { seq } = req.query;
+  const data = await 디비실행(`SELECT * FROM matching WHERE seq = '${seq}'`);
+  res.send(data[0]);
 });
 
 app.post("/autoLogin", (req, res) => {
@@ -131,6 +149,42 @@ app.post("/join", async (req, res) => {
 
   await 디비실행(
     `INSERT INTO user(id,password,name,level) VALUES('${id}','${pw}','${name}','${level}')`
+  );
+
+  res.send(result);
+});
+
+app.post("/match", async (req, res) => {
+  const { place, link, matchtime, memo, level } = req.body;
+  const { loginUser } = req.session;
+
+  const result = {
+    code: "success",
+    message: "매치가 등록 되었습니다",
+  };
+
+  if (place === "") {
+    result.code = "fail";
+    result.message = "풋살장 위치를 입력해주세요";
+  }
+
+  if (link === "") {
+    result.code = "fail";
+    result.message = "링크를 입력해주세요";
+  }
+
+  if (matchtime === "") {
+    result.code = "fail";
+    result.message = "경기 날짜를 입력해주세요";
+  }
+
+  if (result.code === "fail") {
+    res.send(result);
+    return;
+  }
+
+  await 디비실행(
+    `INSERT INTO matching(place,link,matchtime,memo,level,user_seq) VALUES('${place}','${link}','${matchtime}','${memo}','${level}','${loginUser.seq}')`
   );
 
   res.send(result);

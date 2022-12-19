@@ -71,9 +71,8 @@ function Login() {
           </div>
         </div>
       </div>
-      <div className="loginOrJoinContainer">
-        <div className="loginOrJoinImg"></div>
-        <div className="loginOrJoinInner">
+      <div className="contentContainer">
+        <div className="contentInner">
           <div className="inner">
             <div className="headMessage">
               <h2>풋살하고싶을땐</h2>

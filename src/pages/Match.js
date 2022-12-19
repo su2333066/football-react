@@ -1,8 +1,7 @@
-import axios from "axios";
 import React from "react";
+import axios from "axios";
+import { StoreContext } from "../App";
 import { useNavigate } from "react-router-dom";
-
-axios.defaults.withCredentials = true;
 
 const levelButtons = [
   {
@@ -27,10 +26,17 @@ const levelButtons = [
   },
 ];
 
-function Join() {
+function Main() {
+  const { loginUser } = React.useContext(StoreContext);
   const [data, setData] = React.useState({});
-
   const navigation = useNavigate();
+
+  const 마이페이지로이동 = () => {
+    if (Object.keys(loginUser).length !== 0) {
+    } else {
+      navigation("/Login");
+    }
+  };
 
   const 데이터변경 = (event) => {
     const cloneData = { ...data };
@@ -38,9 +44,9 @@ function Join() {
     setData(cloneData);
   };
 
-  const 가입하기 = async () => {
+  const 매치등록 = async () => {
     await axios({
-      url: "http://localhost:4000/join",
+      url: "http://localhost:4000/match",
       method: "POST",
       data: data,
     }).then((response) => {
@@ -48,9 +54,9 @@ function Join() {
         alert(response.data.message);
       }
 
-      if (response.data.code === "success") {
-        navigation("/Login");
-      }
+      //   if (response.data.code === "success") {
+      //     navigation("/");
+      //   }
     });
   };
 
@@ -81,7 +87,7 @@ function Join() {
                 placeholder="지역, 구장 이름으로 찾기"
               ></input>
             </div>
-            <button>
+            <button onClick={마이페이지로이동}>
               <img
                 src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
                 alt="더보기"
@@ -95,21 +101,16 @@ function Join() {
       <div className="contentContainer">
         <div className="contentInner">
           <div className="inner">
-            <div className="headMessage">
-              <h2>풋살하고싶을땐</h2>
-              <h2 className="hlt">플랩풋볼</h2>
-            </div>
             <input
-              name="id"
-              placeholder="아이디를 입력해주세요"
+              name="place"
+              placeholder="풋살장 위치를 입력해주세요"
               onChange={데이터변경}
             />
             <input
-              name="name"
-              placeholder="이름을 입력해주세요"
+              name="link"
+              placeholder="풋살장 링크를 입력해주세요"
               onChange={데이터변경}
             />
-            <span className="levelCheck">Level Check</span>
             <div className="level">
               {levelButtons.map((item, index) => {
                 const className =
@@ -129,23 +130,16 @@ function Join() {
                 );
               })}
             </div>
+            <span>경기날짜</span>
             <input
-              type="password"
-              name="pw"
-              placeholder="비밀번호를 입력해주세요"
+              type="datetime-local"
+              name="matchtime"
               onChange={데이터변경}
             />
-
-            <button type="button" onClick={가입하기}>
-              회원가입
+            <input name="memo" onChange={데이터변경} />
+            <button type="button" onClick={매치등록}>
+              매치등록
             </button>
-          </div>
-          <div className="loginOrJoinKakao">
-            <img
-              src="https://plab-football.s3.amazonaws.com/static/img/ic_kakao.svg"
-              alt="카카오이메일"
-            ></img>
-            <span className="kakaoBtn"> 카카오 로그인</span>
           </div>
         </div>
       </div>
@@ -153,4 +147,4 @@ function Join() {
   );
 }
 
-export default Join;
+export default Main;
