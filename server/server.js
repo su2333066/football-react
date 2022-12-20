@@ -71,7 +71,9 @@ app.get("/", (req, res) => {
 
 app.get("/detail", async (req, res) => {
   const { seq } = req.query;
-  const data = await 디비실행(`SELECT * FROM matching WHERE seq = '${seq}'`);
+  const data = await 디비실행(
+    `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%c%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE seq = '${seq}'`
+  );
   res.send(data[0]);
 });
 
@@ -152,6 +154,13 @@ app.post("/join", async (req, res) => {
   );
 
   res.send(result);
+});
+
+app.get("/match", async (req, res) => {
+  const query =
+    "SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%c%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching";
+  const matchList = await 디비실행(query);
+  res.send(matchList);
 });
 
 app.post("/match", async (req, res) => {

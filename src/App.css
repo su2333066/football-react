@@ -19,6 +19,7 @@
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  padding: 0 20px;
 }
 
 .navbar .navContainer .navLogo {
@@ -101,13 +102,13 @@
 }
 
 .contentInner {
-  min-width: 720px;
+  width: 720px;
   padding: 20px;
   height: 100%;
 }
 
 .contentInner .inner {
-  height: 70% !important;
+  height: 70%;
   max-width: 480px;
   margin: 0 auto;
   margin-top: 50px;
@@ -155,10 +156,19 @@
   margin-bottom: 10px;
 }
 
+.contentInner h4 {
+  margin-bottom: 10px;
+}
+
+.contentInner .date {
+  text-align: center;
+  font-weight: bold;
+}
+
 .contentInner input {
   border: 1px solid #d9e0e6;
   background-color: #f2f5f7;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   height: 48px;
   line-height: 48px;
   border-radius: 16px;
@@ -183,7 +193,7 @@
   border-radius: 12px;
   width: 100%;
   font-size: 16px;
-  color: white;
+  color: #ccc;
   background-color: #1739aa;
   padding: 15px;
   margin-bottom: 10px;
@@ -236,17 +246,90 @@
 }
 
 .matchBtn {
-  position: absolute;
-  right: 50px;
-  bottom: 50px;
-  padding: 20px;
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+  padding: 15px;
   border: 0;
   outline: 0;
   border-radius: 20px;
   cursor: pointer;
+  font-size: 30px;
+  background-color: #1739aa;
+  color: white;
 }
 
-.matchContainer {
+/* matchList */
+.matchListContainer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+.matchList {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.itemContainer {
+  list-style: none;
+}
+
+.itemContainer a {
+  border-bottom: 1px solid #ddd;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 20px 15px;
+}
+
+.itemContainer h3 {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.itemContainer span {
+  font-size: 11px;
+  color: #999;
+  margin-top: 3px;
+}
+
+.itemTime {
+  width: 15%;
+  font-weight: 700;
+  text-align: center;
+  font-size: 15px;
+}
+
+.itemInfo {
+  width: 62%;
+  padding-right: 10px;
+}
+
+.itemStatus {
+  width: 20%;
+}
+
+.matchStatus {
+  width: 100%;
+  text-align: center;
+  padding: 8px 5px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.matchStatus.isFull {
+  color: #ccc;
+  background-color: #eeeeee;
+}
+
+.matchStatus.isHurry {
+  color: white;
+  background-color: #1570ff;
+}
+
+.yes {
+  cursor: pointer;
 }

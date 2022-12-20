@@ -76,8 +76,8 @@ function Join() {
               </button>
               <input
                 type="search"
-                maxlength="100"
-                autocomplete="off"
+                maxLength="100"
+                autoComplete="off"
                 placeholder="지역, 구장 이름으로 찾기"
               ></input>
             </div>

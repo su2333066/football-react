@@ -54,9 +54,9 @@ function Main() {
         alert(response.data.message);
       }
 
-      //   if (response.data.code === "success") {
-      //     navigation("/");
-      //   }
+      if (response.data.code === "success") {
+        navigation("/");
+      }
     });
   };
 
@@ -82,8 +82,8 @@ function Main() {
               </button>
               <input
                 type="search"
-                maxlength="100"
-                autocomplete="off"
+                maxLength="100"
+                autoComplete="off"
                 placeholder="지역, 구장 이름으로 찾기"
               ></input>
             </div>
@@ -101,16 +101,11 @@ function Main() {
       <div className="contentContainer">
         <div className="contentInner">
           <div className="inner">
-            <input
-              name="place"
-              placeholder="풋살장 위치를 입력해주세요"
-              onChange={데이터변경}
-            />
-            <input
-              name="link"
-              placeholder="풋살장 링크를 입력해주세요"
-              onChange={데이터변경}
-            />
+            <h4>풋살장 위치</h4>
+            <input name="place" onChange={데이터변경}></input>
+            <h4>링크</h4>
+            <input name="link" onChange={데이터변경}></input>
+            <h4>레벨</h4>
             <div className="level">
               {levelButtons.map((item, index) => {
                 const className =
@@ -130,13 +125,16 @@ function Main() {
                 );
               })}
             </div>
-            <span>경기날짜</span>
+            <h4>경기날짜</h4>
             <input
+              className="date"
               type="datetime-local"
               name="matchtime"
               onChange={데이터변경}
-            />
-            <input name="memo" onChange={데이터변경} />
+            ></input>
+            <h4>메모</h4>
+            <input name="memo" onChange={데이터변경}></input>
+
             <button type="button" onClick={매치등록}>
               매치등록
             </button>
