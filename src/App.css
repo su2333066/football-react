@@ -333,3 +333,65 @@
 .yes {
   cursor: pointer;
 }
+
+/* detail */
+.detailWrap {
+  margin: 0 auto;
+  background-color: #f2f5f7;
+  height: 100vh;
+}
+
+@media (min-width: 720px) {
+  .detailBody {
+    display: flex;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+
+  .bodyLeft {
+    width: 100%;
+    background-color: white;
+  }
+
+  .bodyRight {
+    width: 60%;
+    min-width: 380px;
+    margin-left: 10px;
+    height: fit-content;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 10px;
+    z-index: 3;
+    background-color: white;
+  }
+
+  .section {
+    display: block;
+    padding: 30px 20px;
+  }
+}
+
+.matchTime {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.matchTime p {
+  font-size: 18px;
+}
+
+.matchPlace {
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 20px;
+}
+
+.matchPlace a {
+  outline: none;
+  color: #222836;
+  text-decoration: none;
+  cursor: pointer;
+  color: #222836;
+  font-size: 20px;
+  font-weight: 400;
+  word-break: keep-all;
+}

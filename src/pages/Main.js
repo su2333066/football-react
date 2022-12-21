@@ -30,31 +30,22 @@ const levelList = [
 function Main() {
   const { loginUser } = React.useContext(StoreContext);
   const navigation = useNavigate();
-  const date = new Date();
   const [matchList, setMatchList] = React.useState([]);
   const [currentDate, setCurrentDate] = React.useState({
-    year: undefined,
-    month: undefined,
-    day: undefined,
-    hours: undefined,
+    date: "",
+    time: "",
   });
 
-  const 현재시간가져오기 = () => {
+  const 현재시간가져오기 = async () => {
     const cloneCurrentDate = { ...currentDate };
 
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-
-    cloneCurrentDate.year = year;
-    cloneCurrentDate.month = month;
-    cloneCurrentDate.day = day;
-    cloneCurrentDate.hours = hours;
-    cloneCurrentDate.minutes = minutes;
-
-    setCurrentDate(cloneCurrentDate);
+    await axios({
+      url: "http://localhost:4000/time",
+    }).then(({ data }) => {
+      cloneCurrentDate.date = data[0].DATE;
+      cloneCurrentDate.time = data[0].TIME;
+      setCurrentDate(cloneCurrentDate);
+    });
   };
 
   const 마이페이지로이동 = () => {
@@ -163,11 +154,15 @@ function Main() {
                         </div>
                       </div>
                       <div className="itemStatus">
-                        {parseInt(
-                          `${currentDate.year}${currentDate.month}${currentDate.day}`
-                        ) > parseInt(item.matchday) ||
-                        parseInt(`${currentDate.hours}${currentDate.minutes}`) >
-                          parseInt(item.matchhour) ? (
+                        {parseInt(currentDate.date) >
+                        parseInt(item.matchday) ? (
+                          <div className="matchStatus isFull">
+                            <p>마감</p>
+                          </div>
+                        ) : parseInt(currentDate.date) ===
+                            parseInt(item.matchday) &&
+                          parseInt(currentDate.time) >
+                            parseInt(item.matchhour) ? (
                           <div className="matchStatus isFull">
                             <p>마감</p>
                           </div>

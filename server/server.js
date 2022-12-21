@@ -156,9 +156,16 @@ app.post("/join", async (req, res) => {
   res.send(result);
 });
 
+app.get("/time", async (req, res) => {
+  const query =
+    "SELECT DATE_FORMAT(NOW(),'%Y%m%d') AS DATE, DATE_FORMAT(NOW(), '%H%i') AS TIME FROM DUAL";
+  const currentDate = await 디비실행(query);
+  res.send(currentDate);
+});
+
 app.get("/match", async (req, res) => {
   const query =
-    "SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%c%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching";
+    "SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching";
   const matchList = await 디비실행(query);
   res.send(matchList);
 });
