@@ -71,6 +71,16 @@ function Main() {
     });
   };
 
+  // const 마감 = async () => {
+  //   await axios({
+  //     url: "http://localhost:4000/applycheck",
+  //     method: "POST",
+  //     data: {
+  //       seq: seq,
+  //     },
+  //   }).then(({ data }) => {});
+  // };
+
   React.useEffect(() => {
     현재시간가져오기();
     매치목록가져오기();
@@ -154,15 +164,8 @@ function Main() {
                         </div>
                       </div>
                       <div className="itemStatus">
-                        {parseInt(currentDate.date) >
-                        parseInt(item.matchday) ? (
-                          <div className="matchStatus isFull">
-                            <p>마감</p>
-                          </div>
-                        ) : parseInt(currentDate.date) ===
-                            parseInt(item.matchday) &&
-                          parseInt(currentDate.time) >
-                            parseInt(item.matchhour) ? (
+                        {parseInt(item.matchday) - parseInt(currentDate.date) <
+                        1 ? (
                           <div className="matchStatus isFull">
                             <p>마감</p>
                           </div>

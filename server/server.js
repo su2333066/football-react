@@ -5,7 +5,7 @@ const mysql = require("mysql2");
 
 const db = mysql.createPoolCluster();
 
-// const cron = require("node-cron");
+const cron = require("node-cron");
 
 const app = express();
 
@@ -57,12 +57,113 @@ function 디비실행(query) {
   });
 }
 
-// cron.schedule("* * * * *", function () {
-//   console.log("매 분 마다 작업 실행");
-// });
+/**
+ * 오후 8시
+ *
+ *
+ * 매치 시간이 오후2시
+ *
+ * 24시간
+ * 24번 돌리는거
+ */
+cron.schedule("24 * * * * *", async function () {
+  console.log("매 분 마다 작업 실행");
 
-// cron.schedule("* * * * * *", function () {
+  /**
+   * 1. 매치 목록
+   * - 6시간전
+   * - [방 레벨] [신청한 사람 레벨] 근사값
+   */
+  const 자동매치목록 = await 디비실행(
+    `SELECT * FROM matching WHERE matchtry = 'NO' AND attend_user_seq != ''`
+  );
+
+  console.log(자동매치목록.length);
+
+  if (자동매치목록.length === 0) {
+    return;
+  }
+
+  for (let key in 자동매치목록) {
+    console.log("hello");
+
+    const 자동매치값 = 자동매치목록[key];
+    const 방레벨 = 자동매치값.level;
+
+    const 참여자번호 = 자동매치값.attend_user_seq
+      .split("/")
+      .filter((item) => {
+        return item !== "";
+      })
+      .join("','");
+
+    const 참여자들 = await 디비실행(
+      `SELECT * FROM user WHERE seq IN ('${참여자번호}')`
+    );
+
+    let 최솟값 = Number.MAX_SAFE_INTEGER;
+    let 최종선택자 = {};
+
+    // 근사값 = 2
+    // 근사값 = 1
+
+    참여자들.forEach((item) => {
+      // 3 - 4 = 1
+      // 1
+      const 근사값 = Math.abs(방레벨 - item.level);
+
+      if (근사값 < 최솟값) {
+        최솟값 = 근사값;
+        최종선택자 = item;
+      }
+    });
+
+    const 최종선택자유저번호 = 최종선택자.seq;
+
+    // console.log(최종선택자유저번호);
+
+    // console.log(`방레벨 = ${방레벨} 최고값 = ${최고값}`);
+  }
+});
+
+/**
+ * 마감처리 (30분마다 실행 시킬거임)
+ */
+cron.schedule("1 * * * *", async function () {
+  console.log("1시간 마다 작업 실행 :", new Date().toString());
+
+  const 마감매칭목록 = await 디비실행(
+    `SELECT * , DATEDIFF(NOW(), matchtime) as date_diff FROM matching WHERE DATEDIFF(NOW(),matchtime) < 1`
+  );
+
+  if (마감매칭목록.length === 0) {
+    return;
+  }
+
+  for (let key in 마감매칭목록) {
+    const 마감매칭값 = 마감매칭목록[key];
+
+    let matchtry = "DEL";
+
+    if (마감매칭값.date_diff == 0) {
+      matchtry = "NO";
+    }
+
+    const query = `UPDATE matching SET matchtry='${matchtry}' WHERE seq='${마감매칭값.seq}'`;
+    await 디비실행(query);
+  }
+});
+// cron.schedule("* * * * * *", async function () {
 //   console.log("매 초 마다 작업 실행 :", new Date().toString());
+
+//   // const user = await 디비실행(
+//   //   `SELECT * FROM user WHERE id='${id}' AND password = '${pw}'`
+//   // );
+
+//   // req.session.loginUser = user[0];
+//   // req.session.save();
+
+//   // res.send(result);
 // });
 
 app.get("/", (req, res) => {
@@ -72,7 +173,7 @@ app.get("/", (req, res) => {
 app.get("/detail", async (req, res) => {
   const { seq } = req.query;
   const data = await 디비실행(
-    `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%c%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE seq = '${seq}'`
+    `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE seq = '${seq}'`
   );
   res.send(data[0]);
 });
@@ -164,10 +265,38 @@ app.get("/time", async (req, res) => {
 });
 
 app.get("/match", async (req, res) => {
-  const query =
-    "SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching";
+  const { loginUser } = req.session;
+
+  const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
+
   const matchList = await 디비실행(query);
   res.send(matchList);
+});
+
+/**
+ * 신청하기
+ */
+app.post("/match/apply", async (req, res) => {
+  const { seq } = req.body;
+  const {
+    loginUser: { seq: loginUserSeq = "1" },
+  } = req.session;
+
+  let [{ attend_user_seq = "" }] = await 디비실행(
+    `SELECT * FROM matching WHERE seq = '${seq}'`
+  );
+
+  const result = {
+    code: "success",
+    message: "신청되었습니다",
+  };
+
+  let new_attend_user_seq = `${attend_user_seq}${loginUserSeq}/`;
+  const query = `UPDATE matching SET attend_user_seq='${new_attend_user_seq}' WHERE seq='${seq}'`;
+
+  await 디비실행(query);
+
+  res.send(result);
 });
 
 app.post("/match", async (req, res) => {

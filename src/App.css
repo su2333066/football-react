@@ -395,3 +395,33 @@
   font-weight: 400;
   word-break: keep-all;
 }
+
+.sectionBtnWrap {
+  position: initial;
+  max-width: 100%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+}
+
+.sectionBtnWrap .applyBtn {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-top: 1px solid #c4cdd4;
+}
+
+.sectionBtnWrap .applyBtn button {
+  margin: 0;
+  border-radius: 10px;
+  padding: 12px;
+  background-color: #d9e0e6;
+  width: 100%;
+  font-size: 16px;
+  color: #ffffff;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
