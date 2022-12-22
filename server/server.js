@@ -57,38 +57,21 @@ function 디비실행(query) {
   });
 }
 
-/**
- * 오후 8시
- *
- *
- * 매치 시간이 오후2시
- *
- * 24시간
- * 24번 돌리는거
- */
-cron.schedule("24 * * * * *", async function () {
-  console.log("매 분 마다 작업 실행");
+cron.schedule("* 6 * * *", async function () {
+  console.log("6시간 마다 작업 실행");
 
-  /**
-   * 1. 매치 목록
-   * - 6시간전
-   * - [방 레벨] [신청한 사람 레벨] 근사값
-   */
   const 자동매치목록 = await 디비실행(
     `SELECT * FROM matching WHERE matchtry = 'NO' AND attend_user_seq != ''`
   );
-
-  console.log(자동매치목록.length);
 
   if (자동매치목록.length === 0) {
     return;
   }
 
   for (let key in 자동매치목록) {
-    console.log("hello");
-
     const 자동매치값 = 자동매치목록[key];
     const 방레벨 = 자동매치값.level;
+    const 방번호 = 자동매치값.seq;
 
     const 참여자번호 = 자동매치값.attend_user_seq
       .split("/")
@@ -104,12 +87,7 @@ cron.schedule("24 * * * * *", async function () {
     let 최솟값 = Number.MAX_SAFE_INTEGER;
     let 최종선택자 = {};
 
-    // 근사값 = 2
-    // 근사값 = 1
-
     참여자들.forEach((item) => {
-      // 3 - 4 = 1
-      // 1
       const 근사값 = Math.abs(방레벨 - item.level);
 
       if (근사값 < 최솟값) {
@@ -120,20 +98,21 @@ cron.schedule("24 * * * * *", async function () {
 
     const 최종선택자유저번호 = 최종선택자.seq;
 
-    // console.log(최종선택자유저번호);
+    console.log(최종선택자유저번호);
 
-    // console.log(`방레벨 = ${방레벨} 최고값 = ${최고값}`);
+    const query = `UPDATE matching SET matchtry='DEL', match_user_seq='${최종선택자유저번호}' WHERE seq='${방번호}'`;
+    await 디비실행(query);
   }
 });
 
 /**
- * 마감처리 (30분마다 실행 시킬거임)
+ * 마감처리 (1시간마다 실행 시킬거임)
  */
-cron.schedule("1 * * * *", async function () {
+cron.schedule("* 1 * * *", async function () {
   console.log("1시간 마다 작업 실행 :", new Date().toString());
 
   const 마감매칭목록 = await 디비실행(
-    `SELECT * , DATEDIFF(NOW(), matchtime) as date_diff FROM matching WHERE DATEDIFF(NOW(),matchtime) < 1`
+    `SELECT * , DATEDIFF(NOW(), matchtime) as date_diff FROM matching WHERE DATEDIFF(matchtime, NOW()) < 1`
   );
 
   if (마감매칭목록.length === 0) {
@@ -153,18 +132,6 @@ cron.schedule("1 * * * *", async function () {
     await 디비실행(query);
   }
 });
-// cron.schedule("* * * * * *", async function () {
-//   console.log("매 초 마다 작업 실행 :", new Date().toString());
-
-//   // const user = await 디비실행(
-//   //   `SELECT * FROM user WHERE id='${id}' AND password = '${pw}'`
-//   // );
-
-//   // req.session.loginUser = user[0];
-//   // req.session.save();
-
-//   // res.send(result);
-// });
 
 app.get("/", (req, res) => {
   res.send("Hello");
@@ -266,6 +233,10 @@ app.get("/time", async (req, res) => {
 
 app.get("/match", async (req, res) => {
   const { loginUser } = req.session;
+
+  if (loginUser === undefined) {
+    return;
+  }
 
   const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
 

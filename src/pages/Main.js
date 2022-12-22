@@ -50,6 +50,7 @@ function Main() {
 
   const 마이페이지로이동 = () => {
     if (Object.keys(loginUser).length !== 0) {
+      // navigation("/Profile");
     } else {
       navigation("/Login");
     }
@@ -70,16 +71,6 @@ function Main() {
       setMatchList(response.data);
     });
   };
-
-  // const 마감 = async () => {
-  //   await axios({
-  //     url: "http://localhost:4000/applycheck",
-  //     method: "POST",
-  //     data: {
-  //       seq: seq,
-  //     },
-  //   }).then(({ data }) => {});
-  // };
 
   React.useEffect(() => {
     현재시간가져오기();
@@ -166,9 +157,16 @@ function Main() {
                       <div className="itemStatus">
                         {parseInt(item.matchday) - parseInt(currentDate.date) <
                         1 ? (
-                          <div className="matchStatus isFull">
-                            <p>마감</p>
-                          </div>
+                          item.match_user_seq !== null &&
+                          item.match_user_seq === loginUser.seq ? (
+                            <div className="matchStatus myMatch">
+                              <p>매치 성공!</p>
+                            </div>
+                          ) : (
+                            <div className="matchStatus isFull">
+                              <p>마감</p>
+                            </div>
+                          )
                         ) : (
                           <div className="matchStatus isHurry">
                             <p
@@ -195,7 +193,7 @@ function Main() {
       </div>
 
       <button className="matchBtn" onClick={매치등록}>
-        💬
+        +
       </button>
     </div>
   );

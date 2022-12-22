@@ -60,8 +60,6 @@ function Main() {
     });
   };
 
-  console.log(data);
-
   return (
     <div className="container">
       <div className="navbar">
