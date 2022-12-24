@@ -50,7 +50,7 @@ function Main() {
 
   const 마이페이지로이동 = () => {
     if (Object.keys(loginUser).length !== 0) {
-      // navigation("/Profile");
+      navigation("/Profile");
     } else {
       navigation("/Login");
     }
@@ -155,8 +155,7 @@ function Main() {
                         </div>
                       </div>
                       <div className="itemStatus">
-                        {parseInt(item.matchday) - parseInt(currentDate.date) <
-                        1 ? (
+                        {parseInt(item.date_diff) < 2 ? (
                           item.match_user_seq !== null &&
                           item.match_user_seq === loginUser.seq ? (
                             <div className="matchStatus myMatch">

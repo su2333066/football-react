@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { StoreContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
+import Location from "../components/Location";
 
 function Detail() {
   const { loginUser } = React.useContext(StoreContext);
@@ -32,6 +33,15 @@ function Detail() {
     }
   };
 
+  const 주소복사 = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("주소가 복사되었습니다.");
+    } catch (e) {
+      alert("주소복사에 실패하였습니다");
+    }
+  };
+
   React.useEffect(() => {
     매치방가져오기();
   }, []);
@@ -43,7 +53,15 @@ function Detail() {
       data: {
         seq: seq,
       },
-    }).then(({ data }) => {});
+    }).then(({ data }) => {
+      if (data.message) {
+        alert(data.message);
+      }
+
+      if (data.code === "success") {
+        window.location = "/";
+      }
+    });
   };
 
   if (loading) {
@@ -89,8 +107,68 @@ function Detail() {
       </div>
 
       <div className="detailWrap">
+        <div className="detailHeader">
+          <div className="mapWrap">
+            <Location link={data.link} />
+          </div>
+        </div>
         <div className="detailBody">
-          <div className="bodyLeft"></div>
+          <div className="bodyLeft">
+            <div className="section">
+              <div className="matchPoint">
+                <h3>매치 포인트</h3>
+              </div>
+              <div className="matchRule">
+                <ul>
+                  <li className="infoList">
+                    <img
+                      src="https://plab-football.s3.amazonaws.com/static/img/ic_info_level.svg"
+                      className="icon"
+                    ></img>
+                    <div>
+                      <p>모든 레벨 신청가능!</p>
+                    </div>
+                  </li>
+                  <li className="infoList">
+                    <img
+                      src="https://plab-football.s3.amazonaws.com/static/img/ic_info_gender.svg"
+                      className="icon"
+                    ></img>
+                    <div>
+                      <p>상관없음</p>
+                    </div>
+                  </li>
+                  <li className="infoList">
+                    <img
+                      src="https://plab-football.s3.amazonaws.com/static/img/ic_info_stadium.svg"
+                      className="icon"
+                    ></img>
+                    <div>
+                      <p>6vs6 (18명일 경우 3파전)</p>
+                    </div>
+                  </li>
+                  <li className="infoList">
+                    <img
+                      src="https://plab-football.s3.amazonaws.com/static/img/ic_info_max_player_cnt.svg"
+                      className="icon"
+                    ></img>
+                    <div>
+                      <p>12~18명</p>
+                    </div>
+                  </li>
+                  <li className="infoList">
+                    <img
+                      src="https://plab-football.s3.amazonaws.com/static/img/ic_info_shoes.svg"
+                      className="icon"
+                    ></img>
+                    <div>
+                      <p>풋살화/운동화</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
           <div className="bodyRight">
             <div className="section">
               <div className="matchTime">
@@ -107,6 +185,17 @@ function Detail() {
               </div>
               <div className="matchPlace">
                 <a>{data.place}</a>
+              </div>
+              <div className="matchAddress">
+                <p>{data.link}</p>
+                <p
+                  className="address"
+                  onClick={() => {
+                    주소복사(`${data.link}`);
+                  }}
+                >
+                  주소복사{" "}
+                </p>
               </div>
             </div>
             <div className="sectionBtnWrap">

@@ -6,6 +6,7 @@ import Join from "./pages/Join";
 import Main from "./pages/Main";
 import Match from "./pages/Match";
 import Detail from "./pages/Detail";
+import Profile from "./pages/Profile";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/match" element={<Match />} />
         <Route exact path="/detail/:seq" element={<Detail />} />
+        <Route exact path="/profile" element={<Profile />} />
       </Routes>
     </StoreContext.Provider>
   );

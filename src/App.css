@@ -12,6 +12,12 @@
   height: 100%;
 }
 
+ol,
+ul,
+li {
+  list-style: none;
+}
+
 /* navbar */
 .navbar .navContainer {
   max-width: 1024px;
@@ -345,7 +351,24 @@
 .detailWrap {
   margin: 0 auto;
   background-color: #f2f5f7;
-  height: 100vh;
+}
+
+.detailHeader {
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+}
+
+.mapWrap {
+  position: relative;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.mapWrap #kakaoMap {
+  max-width: 1024px;
+  height: 448px;
+  background-color: #eee;
 }
 
 @media (min-width: 720px) {
@@ -353,11 +376,6 @@
     display: flex;
     max-width: 1024px;
     margin: 0 auto;
-  }
-
-  .bodyLeft {
-    width: 100%;
-    background-color: white;
   }
 
   .bodyRight {
@@ -371,11 +389,42 @@
     z-index: 3;
     background-color: white;
   }
+}
 
-  .section {
-    display: block;
-    padding: 30px 20px;
-  }
+.bodyLeft {
+  width: 100%;
+  padding: 30px 20px;
+  background-color: white;
+}
+
+.section {
+  padding: 30px 20px;
+  margin: 0px;
+}
+
+.matchPoint {
+  padding-bottom: 20px;
+}
+
+.matchRule ul li {
+  width: 48%;
+  display: inline-block;
+}
+
+.matchRule ul .infoList {
+  display: flex;
+  align-items: center;
+  padding: 10px 0px;
+}
+
+.matchRule ul li .icon {
+  display: inline-block;
+  padding-right: 0px;
+}
+
+.matchRule ul li div {
+  display: inline-block;
+  padding-left: 10px;
 }
 
 .matchTime {
@@ -403,6 +452,21 @@
   word-break: keep-all;
 }
 
+.matchAddress {
+  display: block;
+}
+
+.matchAddress p {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.matchAddress .address {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .sectionBtnWrap {
   position: initial;
   max-width: 100%;
@@ -424,7 +488,7 @@
   margin: 0;
   border-radius: 10px;
   padding: 12px;
-  background-color: #d9e0e6;
+  background-color: #1739aa;
   width: 100%;
   font-size: 16px;
   color: #ffffff;

@@ -101,9 +101,9 @@ function Main() {
       <div className="contentContainer">
         <div className="contentInner">
           <div className="inner">
-            <h4>풋살장 위치</h4>
+            <h4>장소</h4>
             <input name="place" onChange={데이터변경}></input>
-            <h4>링크</h4>
+            <h4>주소</h4>
             <input name="link" onChange={데이터변경}></input>
             <h4>레벨</h4>
             <div className="level">

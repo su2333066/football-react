@@ -100,7 +100,7 @@ cron.schedule("* 6 * * *", async function () {
 
     console.log(최종선택자유저번호);
 
-    const query = `UPDATE matching SET matchtry='DEL', match_user_seq='${최종선택자유저번호}' WHERE seq='${방번호}'`;
+    const query = `UPDATE matching SET match_user_seq='${최종선택자유저번호}' WHERE seq='${방번호}'`;
     await 디비실행(query);
   }
 });
@@ -112,7 +112,7 @@ cron.schedule("* 1 * * *", async function () {
   console.log("1시간 마다 작업 실행 :", new Date().toString());
 
   const 마감매칭목록 = await 디비실행(
-    `SELECT * , DATEDIFF(NOW(), matchtime) as date_diff FROM matching WHERE DATEDIFF(matchtime, NOW()) < 1`
+    `SELECT * , DATEDIFF(matchtime, NOW()) as date_diff FROM matching WHERE DATEDIFF(matchtime, NOW()) < 2`
   );
 
   if (마감매칭목록.length === 0) {
@@ -124,7 +124,7 @@ cron.schedule("* 1 * * *", async function () {
 
     let matchtry = "DEL";
 
-    if (마감매칭값.date_diff == 0) {
+    if (마감매칭값.date_diff == 1) {
       matchtry = "NO";
     }
 
@@ -238,7 +238,7 @@ app.get("/match", async (req, res) => {
     return;
   }
 
-  const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
+  const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq, DATEDIFF(matchtime, NOW()) AS date_diff FROM matching WHERE user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
 
   const matchList = await 디비실행(query);
   res.send(matchList);
@@ -252,15 +252,30 @@ app.post("/match/apply", async (req, res) => {
   const {
     loginUser: { seq: loginUserSeq = "1" },
   } = req.session;
+  const result = {
+    code: "success",
+    message: "신청되었습니다",
+  };
 
   let [{ attend_user_seq = "" }] = await 디비실행(
     `SELECT * FROM matching WHERE seq = '${seq}'`
   );
 
-  const result = {
-    code: "success",
-    message: "신청되었습니다",
-  };
+  if (attend_user_seq !== "") {
+    const 참여자번호 = attend_user_seq
+      .split("/")
+      .filter((item) => {
+        return item !== "";
+      })
+      .join("','");
+
+    if (참여자번호.includes(loginUserSeq)) {
+      result.code = "fail";
+      result.message = "이미 신청하였습니다";
+      res.send(result);
+      return;
+    }
+  }
 
   let new_attend_user_seq = `${attend_user_seq}${loginUserSeq}/`;
   const query = `UPDATE matching SET attend_user_seq='${new_attend_user_seq}' WHERE seq='${seq}'`;
