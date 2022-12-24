@@ -3,6 +3,8 @@ import axios from "axios";
 import { StoreContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const levelList = [
   {
@@ -36,6 +38,14 @@ function Main() {
     time: "",
   });
 
+  const 마이페이지로이동 = () => {
+    if (Object.keys(loginUser).length !== 0) {
+      navigation("/Profile");
+    } else {
+      navigation("/Login");
+    }
+  };
+
   const 현재시간가져오기 = async () => {
     const cloneCurrentDate = { ...currentDate };
 
@@ -46,14 +56,6 @@ function Main() {
       cloneCurrentDate.time = data[0].TIME;
       setCurrentDate(cloneCurrentDate);
     });
-  };
-
-  const 마이페이지로이동 = () => {
-    if (Object.keys(loginUser).length !== 0) {
-      navigation("/Profile");
-    } else {
-      navigation("/Login");
-    }
   };
 
   const 매치등록 = () => {
@@ -79,41 +81,7 @@ function Main() {
 
   return (
     <div className="container">
-      <div className="navbar">
-        <div className="navContainer">
-          <div className="navLogo">
-            <a href="/">
-              <img
-                src="https://plab-football.s3.amazonaws.com/static/img/logo.svg"
-                alt="플랩풋볼"
-              ></img>
-            </a>
-          </div>
-          <div className="navRight">
-            <div className="navSearch">
-              <button>
-                <img
-                  src="https://plab-football.s3.amazonaws.com/static/img/ic_search.svg"
-                  alt="내정보"
-                ></img>
-              </button>
-              <input
-                type="search"
-                maxLength="100"
-                autoComplete="off"
-                placeholder="지역, 구장 이름으로 찾기"
-              ></input>
-            </div>
-            <button onClick={마이페이지로이동}>
-              <img
-                src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-                alt="더보기"
-              ></img>
-            </button>
-            <button>•••</button>
-          </div>
-        </div>
-      </div>
+      <Navbar myProfile={마이페이지로이동} />
 
       <div className="sliderContainer">
         <div className="sliderBox">
@@ -159,7 +127,18 @@ function Main() {
                           item.match_user_seq !== null &&
                           item.match_user_seq === loginUser.seq ? (
                             <div className="matchStatus myMatch">
-                              <p>매치 성공!</p>
+                              <p
+                                onClick={() => {
+                                  if (Object.keys(loginUser).length !== 0) {
+                                    navigation(`/detail/${item.seq}`);
+                                  } else {
+                                    navigation("/Login");
+                                  }
+                                }}
+                                className="yes"
+                              >
+                                매치 성공!
+                              </p>
                             </div>
                           ) : (
                             <div className="matchStatus isFull">
@@ -194,6 +173,8 @@ function Main() {
       <button className="matchBtn" onClick={매치등록}>
         +
       </button>
+
+      <Footer />
     </div>
   );
 }

@@ -57,7 +57,7 @@ function 디비실행(query) {
   });
 }
 
-cron.schedule("* 6 * * *", async function () {
+cron.schedule("0 */6 * * *", async function () {
   console.log("6시간 마다 작업 실행");
 
   const 자동매치목록 = await 디비실행(
@@ -108,7 +108,7 @@ cron.schedule("* 6 * * *", async function () {
 /**
  * 마감처리 (1시간마다 실행 시킬거임)
  */
-cron.schedule("* 1 * * *", async function () {
+cron.schedule("0 */1 * * *", async function () {
   console.log("1시간 마다 작업 실행 :", new Date().toString());
 
   const 마감매칭목록 = await 디비실행(

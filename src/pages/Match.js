@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { StoreContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const levelButtons = [
   {
@@ -26,13 +28,14 @@ const levelButtons = [
   },
 ];
 
-function Main() {
+function Match() {
   const { loginUser } = React.useContext(StoreContext);
   const [data, setData] = React.useState({});
   const navigation = useNavigate();
 
   const 마이페이지로이동 = () => {
     if (Object.keys(loginUser).length !== 0) {
+      navigation("/Profile");
     } else {
       navigation("/Login");
     }
@@ -62,50 +65,20 @@ function Main() {
 
   return (
     <div className="container">
-      <div className="navbar">
-        <div className="navContainer">
-          <div className="navLogo">
-            <a href="/">
-              <img
-                src="https://plab-football.s3.amazonaws.com/static/img/logo.svg"
-                alt="플랩풋볼"
-              ></img>
-            </a>
-          </div>
-          <div className="navRight">
-            <div className="navSearch">
-              <button>
-                <img
-                  src="https://plab-football.s3.amazonaws.com/static/img/ic_search.svg"
-                  alt="내정보"
-                ></img>
-              </button>
-              <input
-                type="search"
-                maxLength="100"
-                autoComplete="off"
-                placeholder="지역, 구장 이름으로 찾기"
-              ></input>
-            </div>
-            <button onClick={마이페이지로이동}>
-              <img
-                src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-                alt="더보기"
-              ></img>
-            </button>
-            <button>•••</button>
-          </div>
-        </div>
-      </div>
+      <Navbar myProfile={마이페이지로이동} />
 
       <div className="contentContainer">
         <div className="contentInner">
           <div className="inner">
-            <h4>장소</h4>
+            <div className="headMessage">
+              <h2>풋살하고싶을땐</h2>
+              <h2 className="hlt">플랩풋볼</h2>
+            </div>
+            <h5>장소</h5>
             <input name="place" onChange={데이터변경}></input>
-            <h4>주소</h4>
+            <h5>주소</h5>
             <input name="link" onChange={데이터변경}></input>
-            <h4>레벨</h4>
+            <h5>레벨</h5>
             <div className="level">
               {levelButtons.map((item, index) => {
                 const className =
@@ -125,14 +98,14 @@ function Main() {
                 );
               })}
             </div>
-            <h4>경기날짜</h4>
+            <h5>경기날짜</h5>
             <input
               className="date"
               type="datetime-local"
               name="matchtime"
               onChange={데이터변경}
             ></input>
-            <h4>메모</h4>
+            <h5>메모</h5>
             <input name="memo" onChange={데이터변경}></input>
 
             <button type="button" onClick={매치등록}>
@@ -141,8 +114,10 @@ function Main() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
 
-export default Main;
+export default Match;

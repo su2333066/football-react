@@ -1,17 +1,30 @@
 import axios from "axios";
 import React from "react";
+import { StoreContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 axios.defaults.withCredentials = true;
 
 function Login() {
+  const { loginUser } = React.useContext(StoreContext);
   const navigation = useNavigate();
+
   const [data, setData] = React.useState({});
 
   const 데이터변경 = (event) => {
     const cloneData = { ...data };
     cloneData[event.target.name] = event.target.value;
     setData(cloneData);
+  };
+
+  const 마이페이지로이동 = () => {
+    if (Object.keys(loginUser).length !== 0) {
+      navigation("/Profile");
+    } else {
+      navigation("/Login");
+    }
   };
 
   const 로그인하기 = async () => {
@@ -36,41 +49,8 @@ function Login() {
 
   return (
     <div className="container">
-      <div className="navbar">
-        <div className="navContainer">
-          <div className="navLogo">
-            <a href="/">
-              <img
-                src="https://plab-football.s3.amazonaws.com/static/img/logo.svg"
-                alt="플랩풋볼"
-              ></img>
-            </a>
-          </div>
-          <div className="navRight">
-            <div className="navSearch">
-              <button>
-                <img
-                  src="https://plab-football.s3.amazonaws.com/static/img/ic_search.svg"
-                  alt="내정보"
-                ></img>
-              </button>
-              <input
-                type="search"
-                maxLength="100"
-                autoComplete="off"
-                placeholder="지역, 구장 이름으로 찾기"
-              ></input>
-            </div>
-            <button>
-              <img
-                src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-                alt="더보기"
-              ></img>
-            </button>
-            <button>•••</button>
-          </div>
-        </div>
-      </div>
+      <Navbar myProfile={마이페이지로이동} />
+
       <div className="contentContainer">
         <div className="contentInner">
           <div className="inner">
@@ -110,6 +90,8 @@ function Login() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

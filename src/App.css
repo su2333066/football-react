@@ -12,6 +12,10 @@
   height: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 ol,
 ul,
 li {
@@ -114,7 +118,7 @@ li {
 }
 
 .contentInner .inner {
-  height: 70%;
+  height: 80%;
   max-width: 480px;
   margin: 0 auto;
   margin-top: 50px;
@@ -140,7 +144,7 @@ li {
 
 .contentInner .inner > span {
   font-size: 13px;
-  color: #4b5a64;
+  color: #54644b;
   text-align: center;
 }
 
@@ -162,7 +166,7 @@ li {
   margin-bottom: 10px;
 }
 
-.contentInner h4 {
+.contentInner h5 {
   margin-bottom: 10px;
 }
 
@@ -371,23 +375,24 @@ li {
   background-color: #eee;
 }
 
+.bodyRight {
+  width: 60%;
+  min-width: 380px;
+  margin-left: 10px;
+  height: fit-content;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 10px;
+  z-index: 3;
+  padding: 30px 20px;
+  background-color: white;
+}
+
 @media (min-width: 720px) {
   .detailBody {
     display: flex;
     max-width: 1024px;
     margin: 0 auto;
-  }
-
-  .bodyRight {
-    width: 60%;
-    min-width: 380px;
-    margin-left: 10px;
-    height: fit-content;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 10px;
-    z-index: 3;
-    background-color: white;
   }
 }
 
@@ -480,7 +485,7 @@ li {
 .sectionBtnWrap .applyBtn {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 30px 20px;
   border-top: 1px solid #c4cdd4;
 }
 
@@ -495,4 +500,101 @@ li {
   border: 0;
   outline: 0;
   cursor: pointer;
+}
+
+.footer {
+  margin-top: 140px;
+  background-color: #2a2a2a;
+}
+
+.footerWrap {
+  overflow: auto;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 50px 20px 100px 20px;
+}
+
+.footerNav {
+  color: white;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+.footerNav h3 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.footerNav ul li {
+  padding: 2px 0;
+}
+
+.footerNav ul {
+  margin-bottom: 30px;
+  width: 50%;
+  float: left;
+}
+
+.footerNav ul li p {
+  color: white;
+  font-size: 13px;
+  color: #999;
+}
+
+.footerWrap .company {
+  text-align: left;
+}
+
+.footerWrap .company h2 {
+  margin-bottom: 10px;
+}
+
+.footerWrap .company h2 a {
+  font-size: 16px;
+  color: white;
+  font-style: italic;
+  border-bottom: 2px solid #ffc645;
+}
+
+.footerWrap .company p {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.footerWrap .company .copyright {
+  font-size: 12px;
+}
+
+.footerWrap .company span {
+  padding: 2px 0;
+  display: block;
+  font-size: 11px;
+  color: #999;
+}
+
+@media only screen and (min-width: 1024px) {
+  .footerWrap {
+    padding: 50px 30px 100px 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footerWrap .footerNav {
+    width: 50%;
+  }
+
+  .footerNav ul {
+    width: 25%;
+  }
+
+  .footerWrap .company {
+    margin-left: 50px;
+    text-align: left;
+    width: 40%;
+  }
+
+  .footerWrap .company h2 a {
+    font-size: 20px;
+  }
 }
