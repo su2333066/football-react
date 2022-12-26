@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
+    "dayjs": "^1.11.7",
     "react": "^18.2.0",
     "react-calendar": "^4.0.0",
     "react-datepicker": "^4.8.0",
@@ -16,6 +17,7 @@
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.5.4",
+    "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

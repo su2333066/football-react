@@ -103,6 +103,58 @@ li {
   border-radius: 20px;
 }
 
+/* calender */
+
+@media only screen and (min-width: 1024px) {
+  .calenderWrap {
+    max-width: 1024px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    margin: 0 auto;
+  }
+
+  .dateWrap {
+    border-radius: 40px;
+    padding: 13px 0px;
+    text-align: center;
+  }
+}
+
+.active-calendar {
+  background-color: #1570ff;
+  color: white;
+}
+
+.dateWrap {
+  cursor: pointer;
+}
+
+.dateWrap p {
+  font-size: 18px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+.dateWrap span {
+  font-size: 11px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  cursor: pointer;
+  color: #3540a5;
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.75;
+  border: 0;
+  outline: 0;
+  padding: 20px;
+  background-color: white;
+}
+
 /* login, join, match */
 .contentContainer {
   height: 100vh;

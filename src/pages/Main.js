@@ -1,5 +1,14 @@
 import React from "react";
 import axios from "axios";
+
+import dayjs from "dayjs";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import SwiperCore, { Navigation } from "swiper";
+
+import "swiper/css";
+
 import { StoreContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel";
@@ -29,14 +38,35 @@ const levelList = [
   },
 ];
 
+function getDayOfWeek(day) {
+  // 0 => 일요일
+  // 1 => 월
+  // 6 => 토요일
+
+  //ex) getDayOfWeek('2022-06-13')
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
+  const dayOfWeek = week[day];
+  return dayOfWeek;
+}
+
 function Main() {
   const { loginUser } = React.useContext(StoreContext);
   const navigation = useNavigate();
   const [matchList, setMatchList] = React.useState([]);
+  const [search, setSearch] = React.useState("");
   const [currentDate, setCurrentDate] = React.useState({
     date: "",
     time: "",
   });
+
+  const [calendar, setCalendar] = React.useState({
+    prev: false,
+    next: false,
+    list: [],
+  });
+
+  const navigationPrevRef = React.useRef(null);
+  const navigationNextRef = React.useRef(null);
 
   const 마이페이지로이동 = () => {
     if (Object.keys(loginUser).length !== 0) {
@@ -69,9 +99,58 @@ function Main() {
   const 매치목록가져오기 = async () => {
     await axios({
       url: "http://localhost:4000/match",
-    }).then((response) => {
-      setMatchList(response.data);
+    }).then(({ data }) => {
+      캘린더만들기(data.diff_date);
+      setMatchList(data.matchList);
     });
+  };
+
+  const 캘린더만들기 = (data) => {
+    const 날짜차이 = data.diff_date;
+    const 맨처음경기날짜 = data.min_date;
+
+    if (!날짜차이) {
+      return;
+    }
+
+    const 맨처음경기날짜형변환 = dayjs(맨처음경기날짜);
+
+    const 날짜들 = [
+      {
+        active: false,
+        date: 맨처음경기날짜형변환.date(),
+        day: 맨처음경기날짜형변환.day(),
+      },
+    ];
+
+    for (let i = 1; i <= 날짜차이; i++) {
+      const 날짜 = 맨처음경기날짜형변환.add(i, "days");
+      날짜들.push({
+        active: false,
+        date: 날짜.date(),
+        day: 날짜.day(),
+      });
+    }
+
+    const cloneCalendar = { ...calendar };
+    cloneCalendar.list = 날짜들;
+
+    setCalendar(cloneCalendar);
+  };
+
+  const 키워드로검색 = async () => {
+    await axios({
+      url: "http://localhost:4000/search",
+      params: { search },
+    }).then((response) => {
+      // console.log(response.data);
+      // console.log(matchList);
+      // setMatchList(response.data)
+    });
+  };
+
+  const 데이터변경 = (event) => {
+    setSearch(event.target.value);
   };
 
   React.useEffect(() => {
@@ -79,13 +158,70 @@ function Main() {
     매치목록가져오기();
   }, []);
 
+  SwiperCore.use([Navigation]);
+
   return (
     <div className="container">
-      <Navbar myProfile={마이페이지로이동} />
+      <Navbar
+        myProfile={마이페이지로이동}
+        keywordSearch={키워드로검색}
+        setData={데이터변경}
+      />
 
       <div className="sliderContainer">
         <div className="sliderBox">
           <Carousel />
+        </div>
+      </div>
+
+      <div className="calenderContainer">
+        <div className="calenderWrap">
+          <button className="swiper-button-prev" ref={navigationPrevRef}>
+            ←
+          </button>
+          {calendar.list.length > 0 && (
+            <Swiper
+              spaceBetween={50}
+              slidesPerView={7}
+              pagination={{ clickable: true }}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => {}}
+              navigation={{
+                prevEl: ".swiper-button-prev",
+                nextEl: ".swiper-button-next",
+              }}
+            >
+              {calendar.list.map((item, index) => {
+                const activeClass = item.active ? "active-calendar" : "";
+                const 요일 = getDayOfWeek(item.day);
+
+                return (
+                  <SwiperSlide
+                    onClick={() => {
+                      const cloneCalendar = { ...calendar };
+                      cloneCalendar.list = cloneCalendar.list.map(
+                        (item, _index) => {
+                          item.active = index === _index ? true : false;
+                          return item;
+                        }
+                      );
+
+                      setCalendar(cloneCalendar);
+                    }}
+                    className={`dateWrap ${activeClass}`}
+                    key={`calender-${index}`}
+                  >
+                    <p>{item.date}</p>
+                    <span>{요일}</span>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          )}
+
+          <button className="swiper-button-next" ref={navigationNextRef}>
+            →
+          </button>
         </div>
       </div>
 

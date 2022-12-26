@@ -240,8 +240,15 @@ app.get("/match", async (req, res) => {
 
   const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq, DATEDIFF(matchtime, NOW()) AS date_diff FROM matching WHERE user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
 
+  const 날짜차이 = await 디비실행(
+    "SELECT DATEDIFF((SELECT matchtime FROM matching WHERE matchtry = 'YES' ORDER BY matchtime DESC LIMIT 1),(SELECT matchtime FROM matching WHERE matchtry = 'YES' ORDER BY matchtime ASC LIMIT 1)) AS diff_date , DATE_FORMAT(matchtime, '%Y-%m-%d') AS DATE FROM matching WHERE matchtry = 'YES' ORDER BY matchtime ASC LIMIT 1;"
+  );
+
   const matchList = await 디비실행(query);
-  res.send(matchList);
+  res.send({
+    matchList: matchList,
+    diff_date: 날짜차이[0],
+  });
 });
 
 /**
@@ -319,6 +326,15 @@ app.post("/match", async (req, res) => {
   );
 
   res.send(result);
+});
+
+app.get("/search", async (req, res) => {
+  const { search } = req.query;
+
+  const query = `SELECT * FROM matching WHERE matching.place LIKE '%${search}%'`;
+
+  const matchList = await 디비실행(query);
+  res.send(matchList);
 });
 
 app.listen(port, () => {
