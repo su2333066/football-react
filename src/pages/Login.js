@@ -29,7 +29,7 @@ function Login() {
 
   const 로그인하기 = async () => {
     await axios({
-      url: "http://localhost:4000/login",
+      url: "http://3.38.255.11/login",
       method: "POST",
       data: data,
     }).then((response) => {
