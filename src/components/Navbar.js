@@ -22,7 +22,7 @@ const Navbar = ({ myProfile, keywordSearch, setData }) => {
               type="search"
               maxLength="100"
               autoComplete="off"
-              placeholder="지역, 구장 이름으로 찾기"
+              placeholder="지역, 구장 이름으로 찾기!!"
               onChange={setData}
             ></input>
           </div>
