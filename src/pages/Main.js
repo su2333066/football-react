@@ -218,7 +218,6 @@ function Main() {
               })}
             </Swiper>
           )}
-
           <button className="swiper-button-next" ref={navigationNextRef}>
             →
           </button>
