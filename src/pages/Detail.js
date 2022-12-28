@@ -15,7 +15,7 @@ function Detail() {
 
   const 매치방가져오기 = async () => {
     await axios({
-      url: "3.38.255.11:4000/detail",
+      url: "http://3.38.255.11:4000/detail",
       method: "GET",
       params: {
         seq: seq,
@@ -49,7 +49,7 @@ function Detail() {
 
   const 신청하기 = async () => {
     await axios({
-      url: "3.38.255.11:4000/match/apply",
+      url: "http://3.38.255.11:4000/match/apply",
       method: "POST",
       data: {
         seq: seq,
