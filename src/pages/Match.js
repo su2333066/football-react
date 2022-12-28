@@ -49,7 +49,7 @@ function Match() {
 
   const 매치등록 = async () => {
     await axios({
-      url: "http://3.38.255.11/match",
+      url: "3.38.255.11/match",
       method: "POST",
       data: data,
     }).then((response) => {

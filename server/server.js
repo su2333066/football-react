@@ -29,8 +29,8 @@ app.use(
 
 db.add("football_project", {
   host: "127.0.0.1",
-  user: "root",
-  password: "",
+  user: "3.38.255.11",
+  password: "@!Asd5653@!",
   database: "football_project",
   port: 3306,
 });
