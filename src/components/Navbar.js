@@ -26,7 +26,11 @@ const Navbar = ({ myProfile, keywordSearch, setData }) => {
               onChange={setData}
             ></input>
           </div>
-          <button onClick={myProfile}>
+          <button
+            onClick={() => {
+              alert("준비중");
+            }}
+          >
             <img
               src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
               alt="더보기"

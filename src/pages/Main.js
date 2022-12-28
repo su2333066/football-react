@@ -120,6 +120,8 @@ function Main() {
         active: false,
         date: 맨처음경기날짜형변환.date(),
         day: 맨처음경기날짜형변환.day(),
+        month: 맨처음경기날짜형변환.month() + 1,
+        year: 맨처음경기날짜형변환.year(),
       },
     ];
 
@@ -129,6 +131,8 @@ function Main() {
         active: false,
         date: 날짜.date(),
         day: 날짜.day(),
+        month: 날짜.month() + 1,
+        year: 날짜.year(),
       });
     }
 
@@ -143,14 +147,33 @@ function Main() {
       url: "http://localhost:4000/search",
       params: { search },
     }).then((response) => {
-      // console.log(response.data);
-      // console.log(matchList);
-      // setMatchList(response.data)
+      setMatchList(response.data);
     });
   };
 
   const 데이터변경 = (event) => {
     setSearch(event.target.value);
+  };
+
+  const 클릭한날짜경기목록 = async (item) => {
+    const 날짜 = `${item.year}${
+      item.month < 10 ? `0${item.month}` : item.month
+    }${item.date < 10 ? `0${item.date}` : item.date}`;
+
+    await axios({
+      url: "http://localhost:4000/search/click",
+      params: { 날짜 },
+    }).then((response) => {
+      setMatchList(response.data);
+    });
+  };
+
+  const 전체목록보여주기 = async () => {
+    await axios({
+      url: "http://localhost:4000/match",
+    }).then(({ data }) => {
+      setMatchList(data.matchList);
+    });
   };
 
   React.useEffect(() => {
@@ -174,17 +197,16 @@ function Main() {
         </div>
       </div>
 
-      <div className="calenderContainer">
-        <div className="calenderWrap">
-          <button className="swiper-button-prev" ref={navigationPrevRef}>
-            ←
-          </button>
-          {calendar.list.length > 0 && (
+      {calendar.list.length > 0 && (
+        <div className="calenderContainer">
+          <div className="calenderWrap">
+            <button className="swiper-button-prev" ref={navigationPrevRef}>
+              ←
+            </button>
             <Swiper
               spaceBetween={50}
               slidesPerView={7}
               pagination={{ clickable: true }}
-              onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => {}}
               navigation={{
                 prevEl: ".swiper-button-prev",
@@ -201,11 +223,16 @@ function Main() {
                       const cloneCalendar = { ...calendar };
                       cloneCalendar.list = cloneCalendar.list.map(
                         (item, _index) => {
-                          item.active = index === _index ? true : false;
+                          item.active = index === _index && !item.active;
+                          index === _index &&
+                            item.active &&
+                            클릭한날짜경기목록(item);
+                          index === _index &&
+                            item.active === false &&
+                            전체목록보여주기();
                           return item;
                         }
                       );
-
                       setCalendar(cloneCalendar);
                     }}
                     className={`dateWrap ${activeClass}`}
@@ -217,12 +244,12 @@ function Main() {
                 );
               })}
             </Swiper>
-          )}
-          <button className="swiper-button-next" ref={navigationNextRef}>
-            →
-          </button>
+            <button className="swiper-button-next" ref={navigationNextRef}>
+              →
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="matchListContainer">
         {matchList.length > 0 &&

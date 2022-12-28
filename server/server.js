@@ -238,7 +238,7 @@ app.get("/match", async (req, res) => {
     return;
   }
 
-  const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq, DATEDIFF(matchtime, NOW()) AS date_diff FROM matching WHERE user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
+  const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq, DATEDIFF(matchtime, NOW()) AS date_diff FROM matching WHERE matchtime > NOW() AND user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
 
   const 날짜차이 = await 디비실행(
     "SELECT DATEDIFF((SELECT matchtime FROM matching WHERE matchtry = 'YES' ORDER BY matchtime DESC LIMIT 1),(SELECT matchtime FROM matching WHERE matchtry = 'YES' ORDER BY matchtime ASC LIMIT 1)) AS diff_date , DATE_FORMAT(matchtime, '%Y-%m-%d') AS DATE FROM matching WHERE matchtry = 'YES' ORDER BY matchtime ASC LIMIT 1;"
@@ -330,8 +330,19 @@ app.post("/match", async (req, res) => {
 
 app.get("/search", async (req, res) => {
   const { search } = req.query;
+  const { loginUser } = req.session;
 
-  const query = `SELECT * FROM matching WHERE matching.place LIKE '%${search}%'`;
+  const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq, DATEDIFF(matchtime, NOW()) AS date_diff FROM matching WHERE matchtime > NOW() AND matching.place LIKE '%${search}%' AND user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
+
+  const matchList = await 디비실행(query);
+  res.send(matchList);
+});
+
+app.get("/search/click", async (req, res) => {
+  const { 날짜 } = req.query;
+  const { loginUser } = req.session;
+
+  const query = `SELECT seq, place, link, memo, LEVEL, matchtry, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq, DATEDIFF(matchtime, NOW()) AS date_diff FROM matching WHERE DATE_FORMAT(matchtime, '%Y%m%d') = '${날짜}' AND user_seq != '${loginUser.seq}'ORDER BY matchtime DESC`;
 
   const matchList = await 디비실행(query);
   res.send(matchList);
