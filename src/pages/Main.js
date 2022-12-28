@@ -80,7 +80,7 @@ function Main() {
     const cloneCurrentDate = { ...currentDate };
 
     await axios({
-      url: "3.38.255.11/time",
+      url: "3.38.255.11:4000/time",
     }).then(({ data }) => {
       cloneCurrentDate.date = data[0].DATE;
       cloneCurrentDate.time = data[0].TIME;
@@ -98,7 +98,7 @@ function Main() {
 
   const 매치목록가져오기 = async () => {
     await axios({
-      url: "3.38.255.11/match",
+      url: "3.38.255.11:4000/match",
     }).then(({ data }) => {
       캘린더만들기(data.diff_date);
       setMatchList(data.matchList);
@@ -144,7 +144,7 @@ function Main() {
 
   const 키워드로검색 = async () => {
     await axios({
-      url: "3.38.255.11/search",
+      url: "3.38.255.11:4000/search",
       params: { search },
     }).then((response) => {
       setMatchList(response.data);
@@ -161,7 +161,7 @@ function Main() {
     }${item.date < 10 ? `0${item.date}` : item.date}`;
 
     await axios({
-      url: "3.38.255.11/search/click",
+      url: "3.38.255.11:4000/search/click",
       params: { 날짜 },
     }).then((response) => {
       setMatchList(response.data);
@@ -170,7 +170,7 @@ function Main() {
 
   const 전체목록보여주기 = async () => {
     await axios({
-      url: "3.38.255.11//match",
+      url: "3.38.255.11:4000/match",
     }).then(({ data }) => {
       setMatchList(data.matchList);
     });
