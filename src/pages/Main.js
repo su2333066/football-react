@@ -71,15 +71,19 @@ function Main() {
       await axios({
         url: "http://3.38.255.11:4000/match",
       }).then(({ data }) => {
+        setLoading(true);
         setMatchList(data.matchList);
         캘린더만들기(data.diff_date);
+        setLoading(false);
       });
     } else {
       await axios({
         url: "http://localhost:4000/match",
       }).then(({ data }) => {
+        setLoading(true);
         setMatchList(data.matchList);
         캘린더만들기(data.diff_date);
+        setLoading(false);
       });
     }
   };
