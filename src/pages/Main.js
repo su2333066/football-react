@@ -245,144 +245,146 @@ function Main() {
         </div>
       </div>
 
-      {calendar.list.length > 0 && !loading ? (
-        <div className="calenderContainer">
-          <div className="calenderWrap">
-            <button className="swiper-button-prev" ref={navigationPrevRef}>
-              ←
-            </button>
-            <Swiper
-              spaceBetween={50}
-              slidesPerView={7}
-              pagination={{ clickable: true }}
-              onSwiper={(swiper) => {}}
-              navigation={{
-                prevEl: ".swiper-button-prev",
-                nextEl: ".swiper-button-next",
-              }}
-            >
-              {calendar.list.map((item, index) => {
-                const activeClass = item.active ? "active-calendar" : "";
-                const 요일 = getDayOfWeek(item.day);
+      {loading ? (
+        <div className="loading">로딩중...</div>
+      ) : (
+        <>
+          {calendar.list.length > 0 && (
+            <div className="calenderContainer">
+              <div className="calenderWrap">
+                <button className="swiper-button-prev" ref={navigationPrevRef}>
+                  ←
+                </button>
+                <Swiper
+                  spaceBetween={50}
+                  slidesPerView={7}
+                  pagination={{ clickable: true }}
+                  onSwiper={(swiper) => {}}
+                  navigation={{
+                    prevEl: ".swiper-button-prev",
+                    nextEl: ".swiper-button-next",
+                  }}
+                >
+                  {calendar.list.map((item, index) => {
+                    const activeClass = item.active ? "active-calendar" : "";
+                    const 요일 = getDayOfWeek(item.day);
 
+                    return (
+                      <SwiperSlide
+                        onClick={() => {
+                          const cloneCalendar = { ...calendar };
+                          cloneCalendar.list = cloneCalendar.list.map(
+                            (item, _index) => {
+                              item.active = index === _index && !item.active;
+                              index === _index &&
+                                item.active &&
+                                클릭한날짜경기목록(item);
+                              index === _index &&
+                                item.active === false &&
+                                전체목록보여주기();
+                              return item;
+                            }
+                          );
+                          setCalendar(cloneCalendar);
+                        }}
+                        className={`dateWrap ${activeClass}`}
+                        key={`calender-${index}`}
+                      >
+                        <p>{item.date}</p>
+                        <span>{요일}</span>
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+                <button className="swiper-button-next" ref={navigationNextRef}>
+                  →
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="matchListContainer">
+            {matchList.length > 0 &&
+              matchList.map((item, index) => {
                 return (
-                  <SwiperSlide
-                    onClick={() => {
-                      const cloneCalendar = { ...calendar };
-                      cloneCalendar.list = cloneCalendar.list.map(
-                        (item, _index) => {
-                          item.active = index === _index && !item.active;
-                          index === _index &&
-                            item.active &&
-                            클릭한날짜경기목록(item);
-                          index === _index &&
-                            item.active === false &&
-                            전체목록보여주기();
-                          return item;
-                        }
-                      );
-                      setCalendar(cloneCalendar);
-                    }}
-                    className={`dateWrap ${activeClass}`}
-                    key={`calender-${index}`}
-                  >
-                    <p>{item.date}</p>
-                    <span>{요일}</span>
-                  </SwiperSlide>
+                  <div key={index} className="matchList">
+                    <ul>
+                      <li className="itemContainer">
+                        <a>
+                          <div className="itemTime">
+                            <p type="datetime">{`${item.matchday.substring(
+                              0,
+                              4
+                            )}-${item.matchday.substring(
+                              4,
+                              6
+                            )}-${item.matchday.substring(6, 8)}`}</p>
+                            <p type="datetime">{`${item.matchhour.substring(
+                              0,
+                              2
+                            )}:${item.matchhour.substring(2, 4)}`}</p>
+                          </div>
+                          <div className="itemInfo">
+                            <div className="infoTitle">
+                              <h3>{item.place}</h3>
+                            </div>
+                            <div className="infoMatchLevel">
+                              {levelList.map((level, index) => {
+                                if (level.value === item.LEVEL) {
+                                  return <span key={index}>{level.name}</span>;
+                                }
+                              })}
+                            </div>
+                          </div>
+                          <div className="itemStatus">
+                            {parseInt(item.date_diff) < 2 ? (
+                              item.match_user_seq !== null &&
+                              item.match_user_seq === loginUser.seq ? (
+                                <div className="matchStatus myMatch">
+                                  <p
+                                    onClick={() => {
+                                      if (Object.keys(loginUser).length !== 0) {
+                                        navigation(`/detail/${item.seq}`);
+                                      } else {
+                                        navigation("/Login");
+                                      }
+                                    }}
+                                    className="yes"
+                                  >
+                                    매치 성공!
+                                  </p>
+                                </div>
+                              ) : (
+                                <div className="matchStatus isFull">
+                                  <p>마감</p>
+                                </div>
+                              )
+                            ) : (
+                              <div className="matchStatus isHurry">
+                                <p
+                                  onClick={() => {
+                                    if (Object.keys(loginUser).length !== 0) {
+                                      navigation(`/detail/${item.seq}`);
+                                    } else {
+                                      navigation("/Login");
+                                    }
+                                  }}
+                                  className="yes"
+                                >
+                                  신청가능
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 );
               })}
-            </Swiper>
-            <button className="swiper-button-next" ref={navigationNextRef}>
-              →
-            </button>
           </div>
-        </div>
-      ) : (
-        Object.keys(loginUser).length !== 0 && (
-          <div className="loading">로딩중...</div>
-        )
+        </>
       )}
-
-      <div className="matchListContainer">
-        {matchList.length > 0 &&
-          matchList.map((item, index) => {
-            return (
-              <div key={index} className="matchList">
-                <ul>
-                  <li className="itemContainer">
-                    <a>
-                      <div className="itemTime">
-                        <p type="datetime">{`${item.matchday.substring(
-                          0,
-                          4
-                        )}-${item.matchday.substring(
-                          4,
-                          6
-                        )}-${item.matchday.substring(6, 8)}`}</p>
-                        <p type="datetime">{`${item.matchhour.substring(
-                          0,
-                          2
-                        )}:${item.matchhour.substring(2, 4)}`}</p>
-                      </div>
-                      <div className="itemInfo">
-                        <div className="infoTitle">
-                          <h3>{item.place}</h3>
-                        </div>
-                        <div className="infoMatchLevel">
-                          {levelList.map((level, index) => {
-                            if (level.value === item.LEVEL) {
-                              return <span key={index}>{level.name}</span>;
-                            }
-                          })}
-                        </div>
-                      </div>
-                      <div className="itemStatus">
-                        {parseInt(item.date_diff) < 2 ? (
-                          item.match_user_seq !== null &&
-                          item.match_user_seq === loginUser.seq ? (
-                            <div className="matchStatus myMatch">
-                              <p
-                                onClick={() => {
-                                  if (Object.keys(loginUser).length !== 0) {
-                                    navigation(`/detail/${item.seq}`);
-                                  } else {
-                                    navigation("/Login");
-                                  }
-                                }}
-                                className="yes"
-                              >
-                                매치 성공!
-                              </p>
-                            </div>
-                          ) : (
-                            <div className="matchStatus isFull">
-                              <p>마감</p>
-                            </div>
-                          )
-                        ) : (
-                          <div className="matchStatus isHurry">
-                            <p
-                              onClick={() => {
-                                if (Object.keys(loginUser).length !== 0) {
-                                  navigation(`/detail/${item.seq}`);
-                                } else {
-                                  navigation("/Login");
-                                }
-                              }}
-                              className="yes"
-                            >
-                              신청가능
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            );
-          })}
-      </div>
 
       <button className="matchBtn" onClick={매치등록}>
         +
