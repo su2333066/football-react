@@ -125,6 +125,8 @@ function Main() {
         setMatchList(data.matchList);
       });
     }
+
+    현재시간가져오기();
   };
 
   const 캘린더만들기 = (data) => {
@@ -225,9 +227,7 @@ function Main() {
   };
 
   React.useEffect(() => {
-    현재시간가져오기();
     매치목록가져오기();
-    setLoading(false);
   }, []);
 
   SwiperCore.use([Navigation]);
