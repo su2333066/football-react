@@ -97,8 +97,6 @@ function Main() {
         setCurrentDate(cloneCurrentDate);
       });
     }
-
-    setLoading(false);
   };
 
   const 매치등록 = () => {
@@ -125,6 +123,8 @@ function Main() {
         setMatchList(data.matchList);
       });
     }
+
+    setLoading(false);
   };
 
   const 캘린더만들기 = (data) => {
@@ -231,10 +231,6 @@ function Main() {
 
   SwiperCore.use([Navigation]);
 
-  if (loading) {
-    return <div>로딩중</div>;
-  }
-
   return (
     <div className="container">
       <Navbar
@@ -249,7 +245,7 @@ function Main() {
         </div>
       </div>
 
-      {calendar.list.length > 0 && (
+      {calendar.list.length > 0 && !loading ? (
         <div className="calenderContainer">
           <div className="calenderWrap">
             <button className="swiper-button-prev" ref={navigationPrevRef}>
@@ -301,6 +297,10 @@ function Main() {
             </button>
           </div>
         </div>
+      ) : (
+        Object.keys(loginUser).length !== 0 && (
+          <div className="loading">로딩중...</div>
+        )
       )}
 
       <div className="matchListContainer">

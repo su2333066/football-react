@@ -96,7 +96,7 @@ function Detail() {
   };
 
   if (loading) {
-    return <div>로딩중</div>;
+    return <div className="loading">로딩중...</div>;
   }
 
   return (

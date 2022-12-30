@@ -650,3 +650,10 @@ li {
     font-size: 20px;
   }
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
