@@ -97,6 +97,8 @@ function Main() {
         setCurrentDate(cloneCurrentDate);
       });
     }
+
+    setLoading(false);
   };
 
   const 매치등록 = () => {
