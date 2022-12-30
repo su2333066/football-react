@@ -224,13 +224,6 @@ app.post("/join", async (req, res) => {
   res.send(result);
 });
 
-app.get("/time", async (req, res) => {
-  const query =
-    "SELECT DATE_FORMAT(NOW(),'%Y%m%d') AS DATE, DATE_FORMAT(NOW(), '%H%i') AS TIME FROM DUAL";
-  const currentDate = await 디비실행(query);
-  res.send(currentDate);
-});
-
 app.get("/match", async (req, res) => {
   const { loginUser } = req.session;
 

@@ -55,10 +55,6 @@ function Main() {
   const [loading, setLoading] = React.useState(true);
   const [matchList, setMatchList] = React.useState([]);
   const [search, setSearch] = React.useState("");
-  const [currentDate, setCurrentDate] = React.useState({
-    date: "",
-    time: "",
-  });
 
   const [calendar, setCalendar] = React.useState({
     prev: false,
@@ -69,33 +65,34 @@ function Main() {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
 
+  const 매치목록가져오기 = async () => {
+    setLoading(false);
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/match",
+      }).then(({ data }) => {
+        setMatchList(data.matchList);
+        캘린더만들기(data.diff_date);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/match",
+      }).then(({ data }) => {
+        setMatchList(data.matchList);
+        캘린더만들기(data.diff_date);
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    매치목록가져오기();
+  }, []);
+
   const 마이페이지로이동 = () => {
     if (Object.keys(loginUser).length !== 0) {
       navigation("/Profile");
     } else {
       navigation("/Login");
-    }
-  };
-
-  const 현재시간가져오기 = async () => {
-    const cloneCurrentDate = { ...currentDate };
-
-    if (process.env.NODE_ENV === "production") {
-      await axios({
-        url: "http://3.38.255.11:4000/time",
-      }).then(({ data }) => {
-        cloneCurrentDate.date = data[0].DATE;
-        cloneCurrentDate.time = data[0].TIME;
-        setCurrentDate(cloneCurrentDate);
-      });
-    } else {
-      await axios({
-        url: "http://localhost:4000/time",
-      }).then(({ data }) => {
-        cloneCurrentDate.date = data[0].DATE;
-        cloneCurrentDate.time = data[0].TIME;
-        setCurrentDate(cloneCurrentDate);
-      });
     }
   };
 
@@ -105,26 +102,6 @@ function Main() {
     } else {
       navigation("/Login");
     }
-  };
-
-  const 매치목록가져오기 = async () => {
-    if (process.env.NODE_ENV === "production") {
-      await axios({
-        url: "http://3.38.255.11:4000/match",
-      }).then(({ data }) => {
-        캘린더만들기(data.diff_date);
-        setMatchList(data.matchList);
-      });
-    } else {
-      await axios({
-        url: "http://localhost:4000/match",
-      }).then(({ data }) => {
-        캘린더만들기(data.diff_date);
-        setMatchList(data.matchList);
-      });
-    }
-
-    setLoading(false);
   };
 
   const 캘린더만들기 = (data) => {
@@ -224,15 +201,10 @@ function Main() {
     }
   };
 
-  React.useEffect(() => {
-    현재시간가져오기();
-    매치목록가져오기();
-  }, []);
-
   SwiperCore.use([Navigation]);
 
   if (loading) {
-    return <div>로딩중...</div>;
+    return <div className="loading">로딩중...</div>;
   }
 
   return (
