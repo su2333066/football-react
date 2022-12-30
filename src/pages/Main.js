@@ -52,7 +52,6 @@ function getDayOfWeek(day) {
 function Main() {
   const { loginUser } = React.useContext(StoreContext);
   const navigation = useNavigate();
-  const [loading, setLoading] = React.useState(true);
   const [matchList, setMatchList] = React.useState([]);
   const [search, setSearch] = React.useState("");
 
@@ -66,24 +65,19 @@ function Main() {
   const navigationNextRef = React.useRef(null);
 
   const 매치목록가져오기 = async () => {
-    setLoading(false);
     if (process.env.NODE_ENV === "production") {
       await axios({
         url: "http://3.38.255.11:4000/match",
       }).then(({ data }) => {
-        setLoading(true);
-        setMatchList(data.matchList);
         캘린더만들기(data.diff_date);
-        setLoading(false);
+        setMatchList(data.matchList);
       });
     } else {
       await axios({
         url: "http://localhost:4000/match",
       }).then(({ data }) => {
-        setLoading(true);
-        setMatchList(data.matchList);
         캘린더만들기(data.diff_date);
-        setLoading(false);
+        setMatchList(data.matchList);
       });
     }
   };
@@ -206,10 +200,6 @@ function Main() {
   };
 
   SwiperCore.use([Navigation]);
-
-  if (loading) {
-    return <div className="loading">로딩중...</div>;
-  }
 
   return (
     <div className="container">
