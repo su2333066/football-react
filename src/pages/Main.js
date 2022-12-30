@@ -52,6 +52,7 @@ function getDayOfWeek(day) {
 function Main() {
   const { loginUser } = React.useContext(StoreContext);
   const navigation = useNavigate();
+  const [loading, setLoading] = React.useState(true);
   const [matchList, setMatchList] = React.useState([]);
   const [search, setSearch] = React.useState("");
   const [currentDate, setCurrentDate] = React.useState({
@@ -79,13 +80,25 @@ function Main() {
   const 현재시간가져오기 = async () => {
     const cloneCurrentDate = { ...currentDate };
 
-    await axios({
-      url: "http://3.38.255.11:4000/time",
-    }).then(({ data }) => {
-      cloneCurrentDate.date = data[0].DATE;
-      cloneCurrentDate.time = data[0].TIME;
-      setCurrentDate(cloneCurrentDate);
-    });
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/time",
+      }).then(({ data }) => {
+        cloneCurrentDate.date = data[0].DATE;
+        cloneCurrentDate.time = data[0].TIME;
+        setCurrentDate(cloneCurrentDate);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/time",
+      }).then(({ data }) => {
+        cloneCurrentDate.date = data[0].DATE;
+        cloneCurrentDate.time = data[0].TIME;
+        setCurrentDate(cloneCurrentDate);
+      });
+    }
+
+    setLoading(false);
   };
 
   const 매치등록 = () => {
@@ -97,12 +110,21 @@ function Main() {
   };
 
   const 매치목록가져오기 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/match",
-    }).then(({ data }) => {
-      캘린더만들기(data.diff_date);
-      setMatchList(data.matchList);
-    });
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/match",
+      }).then(({ data }) => {
+        캘린더만들기(data.diff_date);
+        setMatchList(data.matchList);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/match",
+      }).then(({ data }) => {
+        캘린더만들기(data.diff_date);
+        setMatchList(data.matchList);
+      });
+    }
   };
 
   const 캘린더만들기 = (data) => {
@@ -143,12 +165,21 @@ function Main() {
   };
 
   const 키워드로검색 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/search",
-      params: { search },
-    }).then((response) => {
-      setMatchList(response.data);
-    });
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/search",
+        params: { search },
+      }).then((response) => {
+        setMatchList(response.data);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/search",
+        params: { search },
+      }).then((response) => {
+        setMatchList(response.data);
+      });
+    }
   };
 
   const 데이터변경 = (event) => {
@@ -160,20 +191,37 @@ function Main() {
       item.month < 10 ? `0${item.month}` : item.month
     }${item.date < 10 ? `0${item.date}` : item.date}`;
 
-    await axios({
-      url: "http://3.38.255.11:4000/search/click",
-      params: { 날짜 },
-    }).then((response) => {
-      setMatchList(response.data);
-    });
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/search/click",
+        params: { 날짜 },
+      }).then((response) => {
+        setMatchList(response.data);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/search/click",
+        params: { 날짜 },
+      }).then((response) => {
+        setMatchList(response.data);
+      });
+    }
   };
 
   const 전체목록보여주기 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/match",
-    }).then(({ data }) => {
-      setMatchList(data.matchList);
-    });
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/match",
+      }).then(({ data }) => {
+        setMatchList(data.matchList);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/match",
+      }).then(({ data }) => {
+        setMatchList(data.matchList);
+      });
+    }
   };
 
   React.useEffect(() => {
@@ -182,6 +230,10 @@ function Main() {
   }, []);
 
   SwiperCore.use([Navigation]);
+
+  if (loading) {
+    return <div>로딩중</div>;
+  }
 
   return (
     <div className="container">

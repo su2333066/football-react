@@ -18,12 +18,21 @@ function App() {
   const [loginUser, setLoginUser] = React.useState({});
 
   const 자동로그인 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/autoLogin",
-      method: "POST",
-    }).then((response) => {
-      setLoginUser(response.data);
-    });
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/autoLogin",
+        method: "POST",
+      }).then((response) => {
+        setLoginUser(response.data);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/autoLogin",
+        method: "POST",
+      }).then((response) => {
+        setLoginUser(response.data);
+      });
+    }
   };
   React.useEffect(() => {
     자동로그인();

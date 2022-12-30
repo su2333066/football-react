@@ -14,15 +14,27 @@ function Detail() {
   const [data, setData] = React.useState({});
 
   const 매치방가져오기 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/detail",
-      method: "GET",
-      params: {
-        seq: seq,
-      },
-    }).then(({ data }) => {
-      setData(data);
-    });
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/detail",
+        method: "GET",
+        params: {
+          seq: seq,
+        },
+      }).then(({ data }) => {
+        setData(data);
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/detail",
+        method: "GET",
+        params: {
+          seq: seq,
+        },
+      }).then(({ data }) => {
+        setData(data);
+      });
+    }
 
     setLoading(false);
   };
@@ -48,21 +60,39 @@ function Detail() {
   }, []);
 
   const 신청하기 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/match/apply",
-      method: "POST",
-      data: {
-        seq: seq,
-      },
-    }).then(({ data }) => {
-      if (data.message) {
-        alert(data.message);
-      }
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/match/apply",
+        method: "POST",
+        data: {
+          seq: seq,
+        },
+      }).then(({ data }) => {
+        if (data.message) {
+          alert(data.message);
+        }
 
-      if (data.code === "success") {
-        window.location = "/";
-      }
-    });
+        if (data.code === "success") {
+          window.location = "/";
+        }
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/match/apply",
+        method: "POST",
+        data: {
+          seq: seq,
+        },
+      }).then(({ data }) => {
+        if (data.message) {
+          alert(data.message);
+        }
+
+        if (data.code === "success") {
+          window.location = "/";
+        }
+      });
+    }
   };
 
   if (loading) {

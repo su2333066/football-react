@@ -28,19 +28,35 @@ function Login() {
   };
 
   const 로그인하기 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/login",
-      method: "POST",
-      data: data,
-    }).then((response) => {
-      if (response.data.message) {
-        alert(response.data.message);
-      }
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/login",
+        method: "POST",
+        data: data,
+      }).then((response) => {
+        if (response.data.message) {
+          alert(response.data.message);
+        }
 
-      if (response.data.code === "success") {
-        window.location = "/";
-      }
-    });
+        if (response.data.code === "success") {
+          window.location = "/";
+        }
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/login",
+        method: "POST",
+        data: data,
+      }).then((response) => {
+        if (response.data.message) {
+          alert(response.data.message);
+        }
+
+        if (response.data.code === "success") {
+          window.location = "/";
+        }
+      });
+    }
   };
 
   const 회원가입페이지로이동 = () => {

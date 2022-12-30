@@ -51,19 +51,35 @@ function Join() {
   };
 
   const 가입하기 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/join",
-      method: "POST",
-      data: data,
-    }).then((response) => {
-      if (response.data.message) {
-        alert(response.data.message);
-      }
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/join",
+        method: "POST",
+        data: data,
+      }).then((response) => {
+        if (response.data.message) {
+          alert(response.data.message);
+        }
 
-      if (response.data.code === "success") {
-        navigation("/Login");
-      }
-    });
+        if (response.data.code === "success") {
+          navigation("/Login");
+        }
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/join",
+        method: "POST",
+        data: data,
+      }).then((response) => {
+        if (response.data.message) {
+          alert(response.data.message);
+        }
+
+        if (response.data.code === "success") {
+          navigation("/Login");
+        }
+      });
+    }
   };
 
   return (

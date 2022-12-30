@@ -48,19 +48,35 @@ function Match() {
   };
 
   const 매치등록 = async () => {
-    await axios({
-      url: "http://3.38.255.11:4000/match",
-      method: "POST",
-      data: data,
-    }).then((response) => {
-      if (response.data.message) {
-        alert(response.data.message);
-      }
+    if (process.env.NODE_ENV === "production") {
+      await axios({
+        url: "http://3.38.255.11:4000/match",
+        method: "POST",
+        data: data,
+      }).then((response) => {
+        if (response.data.message) {
+          alert(response.data.message);
+        }
 
-      if (response.data.code === "success") {
-        navigation("/");
-      }
-    });
+        if (response.data.code === "success") {
+          navigation("/");
+        }
+      });
+    } else {
+      await axios({
+        url: "http://localhost:4000/match",
+        method: "POST",
+        data: data,
+      }).then((response) => {
+        if (response.data.message) {
+          alert(response.data.message);
+        }
+
+        if (response.data.code === "success") {
+          navigation("/");
+        }
+      });
+    }
   };
 
   return (
