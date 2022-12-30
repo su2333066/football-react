@@ -114,7 +114,6 @@ function Main() {
       }).then(({ data }) => {
         캘린더만들기(data.diff_date);
         setMatchList(data.matchList);
-        setLoading(false);
       });
     } else {
       await axios({
@@ -122,9 +121,10 @@ function Main() {
       }).then(({ data }) => {
         캘린더만들기(data.diff_date);
         setMatchList(data.matchList);
-        setLoading(false);
       });
     }
+
+    setLoading(false);
   };
 
   const 캘린더만들기 = (data) => {
