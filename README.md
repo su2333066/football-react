@@ -2,25 +2,25 @@
 
 ## 주요기능
 
-### 1. 로그인
+### 1. `로그인`
 
-<span>ex) ID : 123, PW : 123,</span>
-<span> ID : 1234, PW : 1234</span>
+    ex) ID : 123, PW : 123
+        ID : 1234, PW : 1234
 
-<img src="./image/login.png" width="500px" height="500px">
+<img src="./image/login.PNG" width="500px" height="500px">
 
-### 2. 회원가입
+### 2. `회원가입`
 
-<img src="./image/join.png" width="500px" height="500px">
+<img src="./image/join.PNG" width="500px" height="500px">
 
-### 3. 매치 생성
+### 3. `매치 생성`
 
-<img src="./image/match.png" width="500px" height="500px">
+<img src="./image/match.PNG" width="500px" height="500px">
 
-### 4. 현재날짜이후의 매치목록 보여주기
+### 4. 현재날짜이후의 `매치목록` 보여주기
 
-<img src="./image/list.png" width="500px" height="500px">
+<img src="./image/list.PNG" width="500px" height="500px">
 
-### 5. 매치 상세 보기
+### 5. 매치 `상세 보기`
 
-<img src="./image/detail.png" width="500px" height="500px">
+<img src="./image/detail.PNG" width="500px" height="500px">
