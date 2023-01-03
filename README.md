@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=soft&color=0:EEFF00,100:a82da8&height=150&section=header&text=Football Matching⚽&animation=fadeIn&fontSize=60&fontColor=FFFFFF" />
+<img src="https://capsule-render.vercel.app/api?type=soft&color=0:EEFF00,100:a82da8&height=150&section=header&text=MatchingFootball⚽&animation=fadeIn&fontSize=60&fontColor=FFFFFF" />
 
 ### 📌 `기술 스택`
 
