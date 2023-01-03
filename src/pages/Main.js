@@ -209,11 +209,7 @@ function Main() {
         setData={데이터변경}
       />
 
-      <div className="sliderContainer">
-        <div className="sliderBox">
-          <Carousel />
-        </div>
-      </div>
+      <Carousel />
 
       {calendar.list.length > 0 && (
         <div className="calenderContainer">
@@ -222,10 +218,12 @@ function Main() {
               ←
             </button>
             <Swiper
-              spaceBetween={50}
+              className="swiper"
+              spaceBetween={3}
               slidesPerView={7}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => console.log(swiper)}
               pagination={{ clickable: true }}
-              onSwiper={(swiper) => {}}
               navigation={{
                 prevEl: ".swiper-button-prev",
                 nextEl: ".swiper-button-next",

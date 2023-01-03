@@ -31,7 +31,13 @@ const Location = (props) => {
     });
   }, []);
 
-  return <div id="kakaoMap"></div>;
+  return (
+    <div className="detailHeader">
+      <div className="mapWrap">
+        <div id="kakaoMap"></div>
+      </div>
+    </div>
+  );
 };
 
 export default Location;

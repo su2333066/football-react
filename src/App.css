@@ -6,14 +6,25 @@
 
 .container {
   clear: both;
+  zoom: 1;
   margin: 0 auto;
   width: 100%;
-  zoom: 1;
   height: 100%;
 }
 
 a {
   text-decoration: none;
+}
+
+button {
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+input {
+  border: 0;
+  outline: 0;
 }
 
 ol,
@@ -26,65 +37,46 @@ li {
 .navbar .navContainer {
   max-width: 1024px;
   height: 56px;
+  padding: 0 20px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
-}
-
-.navbar .navContainer .navLogo {
-  margin: auto 0;
+  align-items: center;
 }
 
 .navbar .navContainer .navRight {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+}
+
+.navbar .navContainer .navRight i {
+  background-color: white;
+  font-size: 14px;
+  padding: 12px;
 }
 
 .navbar .navContainer .navRight .navSearch {
   display: flex;
   align-items: center;
-  margin-right: 10px;
-  border-radius: 6px;
-  background-color: #f7f7f7;
-}
-
-@media (min-width: 600px) {
-  .navSearch {
-    width: 450px !important;
-    margin: 0;
-    display: inline-block;
-  }
-}
-
-.navbar .navContainer .navRight .navSearch button {
-  background-color: #f7f7f7;
-  border-radius: 6px;
 }
 
 .navbar .navContainer .navRight .navSearch input {
-  width: calc(100% - 60px);
-  background-color: #f7f7f7;
-  border: 0;
-  outline: 0;
+  display: none;
+  width: 350px;
+  background-color: #f2f5f7;
+  color: #3e5463;
+  vertical-align: super;
+  line-height: 24px;
+  font-size: 14px;
+  border-radius: 6px;
+  padding: 6px;
 }
 
-.navbar .navContainer .navRight button {
-  border: 0;
-  outline: 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  padding: 8px;
-}
-
-.navbar .navContainer .navRight img {
-  width: 24px;
-  height: 24px;
+@media only screen and (min-width: 600px) {
+  .navbar .navContainer .navRight .navSearch input {
+    display: block;
+  }
 }
 
 /* slide */
@@ -96,39 +88,71 @@ li {
 .sliderBox {
   max-width: 1024px;
   margin: 0 auto;
-  padding: 20px 0;
+}
+
+.sliderBox a {
+  padding: 20px 40px;
 }
 
 .sliderBox img {
+  width: 100%;
   border-radius: 20px;
 }
 
 /* calender */
+.calenderContainer {
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
 
-@media only screen and (min-width: 1024px) {
-  .calenderWrap {
-    max-width: 1024px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-    margin: 0 auto;
-  }
+.calenderWrap {
+  max-width: 1024px;
+  display: flex;
+  padding: 20px;
+  margin: 0 auto;
+}
 
-  .dateWrap {
-    border-radius: 40px;
-    padding: 13px 0px;
-    text-align: center;
-  }
+.swiper .dateWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  padding: 13px 0;
+  cursor: pointer;
+}
+
+.swiper .dateWrap > p {
+  font-size: 18px;
+  line-height: 14px;
+  padding: 8px 0px;
+  font-weight: 400;
+}
+
+.swiper .dateWrap > span {
+  padding-bottom: 8px;
+  font-size: 11px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  display: block;
+  cursor: pointer;
+  color: #3540a5;
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.75;
+  border: 0;
+  outline: 0;
+  padding: 20px 5px;
+  background-color: white;
 }
 
 .active-calendar {
   background-color: #1570ff;
   color: white;
-}
-
-.dateWrap {
-  cursor: pointer;
 }
 
 .dateWrap p {
@@ -141,18 +165,11 @@ li {
   font-size: 11px;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-  cursor: pointer;
-  color: #3540a5;
-  font-family: "slick";
-  font-size: 20px;
-  line-height: 1;
-  opacity: 0.75;
-  border: 0;
-  outline: 0;
-  padding: 20px;
-  background-color: white;
+@media only screen and (max-width: 1024px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
 }
 
 /* login, join, match */
@@ -416,21 +433,18 @@ li {
 }
 
 .mapWrap {
-  position: relative;
   max-width: 1024px;
   margin: 0 auto;
+  padding: 20px;
 }
-
-.mapWrap #kakaoMap {
+.mapWrap > #kakaoMap {
   max-width: 1024px;
   height: 448px;
   background-color: #eee;
 }
 
 .bodyRight {
-  width: 60%;
   min-width: 380px;
-  margin-left: 10px;
   height: fit-content;
   position: sticky;
   position: -webkit-sticky;
@@ -438,14 +452,6 @@ li {
   z-index: 3;
   padding: 30px 20px;
   background-color: white;
-}
-
-@media (min-width: 720px) {
-  .detailBody {
-    display: flex;
-    max-width: 1024px;
-    margin: 0 auto;
-  }
 }
 
 .bodyLeft {
@@ -554,16 +560,31 @@ li {
   cursor: pointer;
 }
 
+@media (min-width: 950px) {
+  .detailBody {
+    display: flex;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+
+  .bodyRight {
+    width: 60%;
+    margin-left: 10px;
+  }
+}
+
+/* Footer */
 .footer {
   margin-top: 140px;
   background-color: #2a2a2a;
 }
 
 .footerWrap {
-  overflow: auto;
   max-width: 1024px;
+  display: flex;
+  justify-content: space-evenly;
   margin: 0 auto;
-  padding: 50px 20px 100px 20px;
+  padding: 50px 30px 100px 30px;
 }
 
 .footerNav {
@@ -628,8 +649,6 @@ li {
 @media only screen and (min-width: 1024px) {
   .footerWrap {
     padding: 50px 30px 100px 30px;
-    display: flex;
-    justify-content: space-between;
   }
 
   .footerWrap .footerNav {

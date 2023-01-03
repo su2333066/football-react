@@ -13,35 +13,30 @@ const Navbar = ({ myProfile, keywordSearch, setData }) => {
         <div className="navRight">
           <div className="navSearch">
             <button onClick={keywordSearch}>
-              <img
-                src="https://plab-football.s3.amazonaws.com/static/img/ic_search.svg"
-                alt="내정보"
-              ></img>
+              <i className="fa-solid fa-magnifying-glass"></i>
             </button>
             <input
               type="search"
-              maxLength="100"
               autoComplete="off"
-              placeholder="지역, 구장 이름으로 찾기!!"
+              placeholder="지역, 구장 이름으로 찾기"
               onChange={setData}
             ></input>
+            <button
+              onClick={() => {
+                alert("준비중");
+              }}
+            >
+              <i className="fa-regular fa-user"></i>
+            </button>
           </div>
+
           <button
+            className="moreBtn"
             onClick={() => {
               alert("준비중");
             }}
           >
-            <img
-              src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-              alt="더보기"
-            ></img>
-          </button>
-          <button
-            onClick={() => {
-              alert("준비중");
-            }}
-          >
-            •••
+            <i className="fa-solid fa-bars"></i>
           </button>
         </div>
       </div>

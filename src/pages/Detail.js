@@ -104,11 +104,7 @@ function Detail() {
       <Navbar myProfile={마이페이지로이동} />
 
       <div className="detailWrap">
-        <div className="detailHeader">
-          <div className="mapWrap">
-            <Location link={data.link} />
-          </div>
-        </div>
+        <Location link={data.link} />
         <div className="detailBody">
           <div className="bodyLeft">
             <div className="section">
