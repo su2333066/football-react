@@ -1,6 +1,6 @@
 <img src="https://capsule-render.vercel.app/api?type=soft&color=0:EEFF00,100:a82da8&height=150&section=header&text=MatchingFootball⚽&animation=fadeIn&fontSize=60&fontColor=FFFFFF" />
 
-### 📌 `기술 스택`
+#### 📌 Use Stack 📌
 
 <div>
 	<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" />
@@ -11,25 +11,25 @@
     <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white" />
 </div>
 
-#### `1. 로그인`
+##### • Login
 
     ex) ID : 123, PW : 123
         ID : 1234, PW : 1234
 
 <img src="./image/login.PNG" width="500px" height="500px">
 
-#### `2. 회원가입`
+##### • Join
 
 <img src="./image/join.PNG" width="500px" height="500px">
 
-#### `3. 매치 생성`
+##### • Add Match
 
 <img src="./image/match.PNG" width="500px" height="500px">
 
-#### `4. 현재날짜이후의 매치목록 보여주기`
+##### • Match List
 
 <img src="./image/list.PNG" width="500px" height="500px">
 
-#### `5. 매치 상세 보기`
+##### • Detail
 
 <img src="./image/detail.PNG" width="500px" height="500px">
