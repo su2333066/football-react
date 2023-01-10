@@ -241,26 +241,26 @@ app.get("/match", async (req, res) => {
   });
 });
 
-app.get("/profile", async (req, res) => {
-  const { loginUser } = req.session;
+// app.get("/profile", async (req, res) => {
+//   const { loginUser } = req.session;
 
-  // if (loginUser === undefined) {
-  //   return;
-  // }
+//   if (loginUser === undefined) {
+//     return;
+//   }
 
-  // const query = `SELECT seq, place, link, memo, LEVEL, DATE_FORMAT(matchtime, '%Y-%m-%d') AS matchday, DATE_FORMAT(matchtime, '%H:%i') AS matchhour FROM matching WHERE match_user_seq = '${loginUser.seq}'`;
+//   const query = `SELECT seq, place, link, memo, LEVEL, DATE_FORMAT(matchtime, '%Y-%m-%d') AS matchday, DATE_FORMAT(matchtime, '%H:%i') AS matchhour FROM matching WHERE match_user_seq = '${loginUser.seq}'`;
 
-  // const matchList = await 디비실행(query);
+//   const matchList = await 디비실행(query);
 
-  // if (matchList.length === 0) {
-  //   return;
-  // }
+//   if (matchList.length === 0) {
+//     return;
+//   }
 
-  // res.send({
-  //   matchList: matchList,
-  // });
-  res.send("");
-});
+//   res.send({
+//     matchList: matchList,
+//   });
+//   res.send("");
+// });
 
 app.post("/match/apply", async (req, res) => {
   const { seq } = req.body;
