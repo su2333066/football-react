@@ -1,3 +1,39 @@
+:root {
+  /* Color */
+  --color-white: #ffffff;
+  --color-light-white: #eeeeee;
+  --color-dark-white: #bdbdbd;
+  --color-pink: #fe918d;
+  --color-dark-blue: #8175f2;
+  --color-blue: #1570ff;
+  --color-black: #4d4d4d;
+  --color-dark-gray: #4d4d4d;
+  --color-gray: #616161;
+  --color-light-gray: #7c7979;
+  --color-purple: #d1acf9;
+  --color-yellow: #fff7d1;
+  --color-orange: #feb546;
+  --color-black: #000000;
+
+  /* Font size */
+  --font-large: 48px;
+  --font-medium: 28px;
+  --font-regular: 18px;
+  --font-small: 14px;
+  --font-micro: 12px;
+
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+
+  /* Size */
+  --size-border-radius: 4px;
+
+  /* Animation */
+  --animation-duration: 300ms;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -699,4 +735,84 @@ li {
 
 .detail__loading {
   height: 100vh;
+}
+
+/* Profile */
+.profile {
+  background-color: var(--color-light-white);
+}
+
+.profile__container {
+  padding: 40px 0;
+  max-width: 1024px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile__left {
+  flex-basis: 55%;
+  margin-left: 12px;
+  background-color: var(--color-white);
+}
+
+.profile__left h2 {
+  padding: 8px;
+  margin: 24px;
+}
+
+.profile__left .match {
+  position: relative;
+  margin: 24px;
+  padding: 8px;
+  border-bottom: 1px solid var(--color-dark-white);
+}
+
+.profile__left .match li {
+  padding: 6px;
+}
+
+.match__level {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  font-size: var(--font-micro);
+  border-radius: var(--size-border-radius);
+  transition: all var(--animation-duration) ease-in;
+}
+
+.match__level-star {
+  display: none;
+  position: absolute;
+}
+
+.match__level:hover .match__level-star {
+  display: block;
+  transform: translateX(-10px) translateY(-10px);
+}
+
+.match__level:hover {
+  transform: scale(1.2);
+}
+
+.match__time {
+  font-size: var(--font-regular);
+  font-weight: var(--weight-semi-bold);
+}
+
+.match__address {
+  font-size: var(--font-small);
+}
+
+.match__memo {
+  font-size: var(--font-small);
+}
+
+.profile__right {
+  flex-basis: 40%;
+  padding: 24px;
+  margin-right: 12px;
+  background-color: var(--color-white);
 }
