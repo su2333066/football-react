@@ -68,7 +68,7 @@ function Profile() {
       <div className="profile">
         <div className="profile__container">
           <div className="profile__left">
-            <h2>매치 목록</h2>
+            <h2>내가 만든 매치</h2>
             {matchList.length > 0 &&
               matchList.map((match, index) => {
                 return (

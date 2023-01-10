@@ -746,6 +746,7 @@ li {
 .profile__container {
   padding: 40px 0;
   max-width: 1024px;
+  height: 100vh;
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -753,8 +754,10 @@ li {
 
 .profile__left {
   flex-basis: 55%;
+  height: 90%;
   margin-left: 12px;
   background-color: var(--color-white);
+  overflow: scroll;
 }
 
 .profile__left h2 {
@@ -813,6 +816,7 @@ li {
 
 .profile__right {
   flex-basis: 40%;
+  height: 400px;
   padding: 24px;
   margin-right: 12px;
   background-color: var(--color-white);

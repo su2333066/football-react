@@ -248,7 +248,7 @@ app.get("/profile", async (req, res) => {
     return;
   }
 
-  const query = `SELECT seq, place, link, memo, LEVEL, DATE_FORMAT(matchtime, '%Y%m%d') AS matchday, DATE_FORMAT(matchtime, '%H%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE match_user_seq = '${loginUser.seq}' ORDER BY matchtime DESC`;
+  const query = `SELECT seq, place, link, memo, LEVEL, DATE_FORMAT(matchtime, '%Y-%m-%d') AS matchday, DATE_FORMAT(matchtime, '%H:%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE user_seq = '${loginUser.seq}' ORDER BY matchtime DESC`;
 
   const matchList = await 디비실행(query);
   res.send({
