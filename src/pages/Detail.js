@@ -183,13 +183,6 @@ function Detail() {
               </div>
               <div className="matchAddress">
                 <p>{data.link}</p>
-                {/* <CopyToClipboard
-                  className="address"
-                  text={`${data.link}`}
-                  onCopy={() => alert("주소가 복사되었습니다.")}
-                >
-                  <text>주소복사</text>
-                </CopyToClipboard> */}
                 <CopyToClipboard
                   text={`${data.link}`}
                   onCopy={() => alert("주소가 복사되었습니다")}
