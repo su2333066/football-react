@@ -44,15 +44,15 @@ function Profile() {
   const 성공된매치가져오기 = async () => {
     if (process.env.NODE_ENV === "production") {
       await axios({
-        url: "http://3.38.255.11:4000/profile/success",
+        url: "http://3.38.255.11:4000/profile",
       }).then(({ data }) => {
         setMatchList(data.matchList);
       });
     } else {
       await axios({
-        url: "http://localhost:4000/profile/success",
+        url: "http://localhost:4000/profile",
       }).then(({ data }) => {
-        setMatchList(data.matchList);
+        // setMatchList(data.matchList);
       });
     }
   };
