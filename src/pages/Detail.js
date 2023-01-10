@@ -183,18 +183,18 @@ function Detail() {
                 </p>
               </div>
               <div className="matchPlace">
-                <a>{data.place}</a>
+                <p>{data.place}</p>
               </div>
               <div className="matchAddress">
                 <p>{data.link}</p>
-                <p
+                <button
                   className="address"
                   onClick={() => {
                     주소복사(`${data.link}`);
                   }}
                 >
-                  주소복사{" "}
-                </p>
+                  주소복사
+                </button>
               </div>
             </div>
             <div className="sectionBtnWrap">

@@ -529,6 +529,7 @@ li {
 .matchAddress .address {
   cursor: pointer;
   text-decoration: underline;
+  background-color: white;
 }
 
 .sectionBtnWrap {
