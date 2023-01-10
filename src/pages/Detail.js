@@ -4,6 +4,7 @@ import { StoreContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
 import Location from "../components/Location";
 import Navbar from "../components/Navbar";
+import Spinner from "../assets/loading.gif";
 
 function Detail() {
   const { loginUser } = React.useContext(StoreContext);
@@ -96,7 +97,12 @@ function Detail() {
   };
 
   if (loading) {
-    return <div className="loading">로딩중...</div>;
+    return (
+      <div className="loadingORlogin">
+        <img src={Spinner} alt="로딩중"></img>
+        <span>Loading...</span>
+      </div>
+    );
   }
 
   return (

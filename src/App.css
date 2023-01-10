@@ -575,7 +575,6 @@ li {
 
 /* Footer */
 .footer {
-  margin-top: 140px;
   background-color: #2a2a2a;
 }
 
@@ -670,6 +669,20 @@ li {
   }
 }
 
-.loading {
+.loadingORlogin {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.loadingORlogin img {
+  width: 100px;
+  height: 100px;
+}
+
+.loadingORlogin span {
   font-weight: bold;
 }

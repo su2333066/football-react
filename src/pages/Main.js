@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Spinner from "../assets/loading.gif";
 
 const levelList = [
   {
@@ -216,9 +217,12 @@ function Main() {
       <Carousel />
 
       {Object.keys(loginUser).length === 0 ? (
-        <div className="loading">Please Login!</div>
+        <div className="loadingORlogin">Please Login!</div>
       ) : loading ? (
-        <div className="loading">loading...</div>
+        <div className="loadingORlogin">
+          <img src={Spinner} alt="로딩중"></img>
+          <span>Loading...</span>
+        </div>
       ) : (
         <div className="matchListContainer">
           {calendar.list.length > 0 && (
