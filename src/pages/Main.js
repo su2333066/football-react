@@ -105,6 +105,10 @@ function Main() {
     }
   };
 
+  const 로그인페이지로이동 = () => {
+    navigation("/Login");
+  };
+
   const 캘린더만들기 = (data) => {
     const 날짜차이 = data.diff_date;
     const 맨처음경기날짜 = data.min_date;
@@ -217,7 +221,12 @@ function Main() {
       <Carousel />
 
       {Object.keys(loginUser).length === 0 ? (
-        <div className="loadingORlogin">Please Login!</div>
+        <div className="loadingORlogin">
+          <span>Please Login!</span>
+          <button type="button" onClick={로그인페이지로이동}>
+            Go
+          </button>
+        </div>
       ) : loading ? (
         <div className="loadingORlogin">
           <img src={Spinner} alt="로딩중"></img>

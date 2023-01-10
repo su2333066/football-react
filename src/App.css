@@ -345,6 +345,7 @@ li {
   padding: 0;
   border: 0;
   vertical-align: baseline;
+  margin-bottom: 100px;
 }
 
 .matchList {
@@ -685,4 +686,12 @@ li {
 
 .loadingORlogin span {
   font-weight: bold;
+}
+
+.loadingORlogin button {
+  margin-top: 20px;
+  padding: 8px 12px;
+  color: white;
+  background-color: #1570ff;
+  border-radius: 4px;
 }
