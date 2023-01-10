@@ -563,6 +563,7 @@ li {
 }
 
 .matchAddress .address {
+  font-size: 14px;
   cursor: pointer;
   text-decoration: underline;
   background-color: white;

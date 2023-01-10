@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Location from "../components/Location";
 import Navbar from "../components/Navbar";
 import Spinner from "../assets/loading.gif";
+import { CopyToClipboard } from "react-copy-to-clipboard/src";
 
 function Detail() {
   const { loginUser } = React.useContext(StoreContext);
@@ -43,15 +44,6 @@ function Detail() {
       navigation("/Profile");
     } else {
       navigation("/Login");
-    }
-  };
-
-  const handleCopyClipBoard = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      alert("주소가 복사되었습니다.");
-    } catch (error) {
-      alert("주소복사에 실패하였습니다");
     }
   };
 
@@ -191,12 +183,19 @@ function Detail() {
               </div>
               <div className="matchAddress">
                 <p>{data.link}</p>
-                <button
+                {/* <CopyToClipboard
                   className="address"
-                  onClick={() => handleCopyClipBoard(`${data.link}`)}
+                  text={`${data.link}`}
+                  onCopy={() => alert("주소가 복사되었습니다.")}
                 >
-                  주소복사
-                </button>
+                  <text>주소복사</text>
+                </CopyToClipboard> */}
+                <CopyToClipboard
+                  text={`${data.link}`}
+                  onCopy={() => alert("주소가 복사되었습니다")}
+                >
+                  <span className="address">주소복사</span>
+                </CopyToClipboard>
               </div>
             </div>
             <div className="sectionBtnWrap">
