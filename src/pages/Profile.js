@@ -46,13 +46,13 @@ function Profile() {
       await axios({
         url: "http://3.38.255.11:4000/profile",
       }).then(({ data }) => {
-        setMatchList(data.matchList);
+        setMatchList(data.matches);
       });
     } else {
       await axios({
         url: "http://localhost:4000/profile",
       }).then(({ data }) => {
-        setMatchList(data.matchList);
+        setMatchList(data.matches);
       });
     }
   };
