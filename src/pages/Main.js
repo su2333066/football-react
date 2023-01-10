@@ -52,6 +52,8 @@ function getDayOfWeek(day) {
 function Main() {
   const { loginUser } = React.useContext(StoreContext);
   const navigation = useNavigate();
+
+  const [loading, setLoading] = React.useState(true);
   const [matchList, setMatchList] = React.useState([]);
   const [search, setSearch] = React.useState("");
 
@@ -137,6 +139,7 @@ function Main() {
     cloneCalendar.list = 날짜들;
 
     setCalendar(cloneCalendar);
+    setLoading(false);
   };
 
   const 키워드로검색 = async () => {
@@ -201,6 +204,10 @@ function Main() {
 
   SwiperCore.use([Navigation]);
 
+  if (loading) {
+    return <div className="loading">로딩중...</div>;
+  }
+
   return (
     <div className="container">
       <Navbar
@@ -221,8 +228,6 @@ function Main() {
               className="swiper"
               spaceBetween={3}
               slidesPerView={7}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
               pagination={{ clickable: true }}
               navigation={{
                 prevEl: ".swiper-button-prev",
