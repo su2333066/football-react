@@ -190,6 +190,8 @@ function Main() {
         setMatchList(response.data);
       });
     }
+
+    setLoading(false);
   };
 
   const 전체목록보여주기 = async () => {
@@ -206,6 +208,8 @@ function Main() {
         setMatchList(data.matchList);
       });
     }
+
+    setLoading(false);
   };
 
   SwiperCore.use([Navigation]);
@@ -260,6 +264,7 @@ function Main() {
                           const cloneCalendar = { ...calendar };
                           cloneCalendar.list = cloneCalendar.list.map(
                             (item, _index) => {
+                              setLoading(true);
                               item.active = index === _index && !item.active;
                               index === _index &&
                                 item.active &&
