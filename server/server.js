@@ -105,9 +105,6 @@ cron.schedule("0 */6 * * *", async function () {
   }
 });
 
-/**
- * 마감처리 (1시간마다 실행 시킬거임)
- */
 cron.schedule("0 */1 * * *", async function () {
   console.log("1시간 마다 작업 실행 :", new Date().toString());
 
@@ -244,7 +241,6 @@ app.get("/match", async (req, res) => {
   });
 });
 
-// Profile
 app.get("/profile/match", async (req, res) => {
   const { loginUser } = req.session;
 
@@ -260,12 +256,9 @@ app.get("/profile/match", async (req, res) => {
     return;
   }
 
-  res.send({ matchList });
+  res.send(matchList);
 });
 
-/**
- * 신청하기
- */
 app.post("/match/apply", async (req, res) => {
   const { seq } = req.body;
   const {

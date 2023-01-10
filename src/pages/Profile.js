@@ -52,7 +52,7 @@ function Profile() {
       await axios({
         url: "http://localhost:4000/profile/match",
       }).then(({ data }) => {
-        setMatchList(data.matchList);
+        setMatchList(data);
       });
     }
   };
