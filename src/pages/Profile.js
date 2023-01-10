@@ -44,13 +44,13 @@ function Profile() {
   const 성공된매치가져오기 = async () => {
     if (process.env.NODE_ENV === "production") {
       await axios({
-        url: "http://3.38.255.11:4000/success",
+        url: "http://3.38.255.11:4000/profile/match",
       }).then(({ data }) => {
         setMatchList(data.matchList);
       });
     } else {
       await axios({
-        url: "http://localhost:4000/success",
+        url: "http://localhost:4000/profile/match",
       }).then(({ data }) => {
         setMatchList(data.matchList);
       });
@@ -69,7 +69,7 @@ function Profile() {
         <div className="profile__container">
           <div className="profile__left">
             <h2>매치 목록</h2>
-            {matchList.length !== 0 &&
+            {matchList.length > 0 &&
               matchList.map((match, index) => {
                 return (
                   <ul className="match" key={index}>

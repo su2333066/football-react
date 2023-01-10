@@ -393,7 +393,7 @@ li {
   list-style: none;
 }
 
-.itemContainer a {
+.itemContainer .item__wrap {
   border-bottom: 1px solid #ddd;
   display: flex;
   align-items: center;

@@ -123,6 +123,7 @@ function Detail() {
                     <img
                       src="https://plab-football.s3.amazonaws.com/static/img/ic_info_level.svg"
                       className="icon"
+                      alt="레벨"
                     ></img>
                     <div>
                       <p>모든 레벨 신청가능!</p>
@@ -132,6 +133,7 @@ function Detail() {
                     <img
                       src="https://plab-football.s3.amazonaws.com/static/img/ic_info_gender.svg"
                       className="icon"
+                      alt="성별"
                     ></img>
                     <div>
                       <p>상관없음</p>
@@ -141,6 +143,7 @@ function Detail() {
                     <img
                       src="https://plab-football.s3.amazonaws.com/static/img/ic_info_stadium.svg"
                       className="icon"
+                      alt="스타디움"
                     ></img>
                     <div>
                       <p>6vs6 (18명일 경우 3파전)</p>
@@ -150,6 +153,7 @@ function Detail() {
                     <img
                       src="https://plab-football.s3.amazonaws.com/static/img/ic_info_max_player_cnt.svg"
                       className="icon"
+                      alt="최대인원"
                     ></img>
                     <div>
                       <p>12~18명</p>
@@ -159,6 +163,7 @@ function Detail() {
                     <img
                       src="https://plab-football.s3.amazonaws.com/static/img/ic_info_shoes.svg"
                       className="icon"
+                      alt="신발"
                     ></img>
                     <div>
                       <p>풋살화/운동화</p>

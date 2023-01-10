@@ -299,7 +299,7 @@ function Main() {
                 <div key={index} className="matchList">
                   <ul>
                     <li className="itemContainer">
-                      <a>
+                      <div className="item__wrap">
                         <div className="itemTime">
                           <p type="datetime">{`${item.matchday.substring(
                             0,
@@ -365,7 +365,7 @@ function Main() {
                             </div>
                           )}
                         </div>
-                      </a>
+                      </div>
                     </li>
                   </ul>
                 </div>
