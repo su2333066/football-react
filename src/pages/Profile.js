@@ -44,13 +44,13 @@ function Profile() {
   const 성공된매치가져오기 = async () => {
     if (process.env.NODE_ENV === "production") {
       await axios({
-        url: "http://3.38.255.11:4000/match/success",
+        url: "http://3.38.255.11:4000/success",
       }).then(({ data }) => {
         setMatchList(data.matchList);
       });
     } else {
       await axios({
-        url: "http://localhost:4000/match/success",
+        url: "http://localhost:4000/success",
       }).then(({ data }) => {
         setMatchList(data.matchList);
       });

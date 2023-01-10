@@ -245,7 +245,7 @@ app.get("/match", async (req, res) => {
 });
 
 // Profile
-app.get("/match/success", async (req, res) => {
+app.get("/success", async (req, res) => {
   const { loginUser } = req.session;
 
   if (loginUser === undefined) {
