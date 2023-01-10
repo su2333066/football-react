@@ -695,3 +695,7 @@ li {
   background-color: #1570ff;
   border-radius: 4px;
 }
+
+.detail__loading {
+  height: 100vh;
+}

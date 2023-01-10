@@ -98,7 +98,7 @@ function Detail() {
 
   if (loading) {
     return (
-      <div className="loadingORlogin">
+      <div className="loadingORlogin detail__loading">
         <img src={Spinner} alt="로딩중"></img>
         <span>Loading...</span>
       </div>
