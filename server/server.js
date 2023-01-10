@@ -245,14 +245,14 @@ app.get("/match", async (req, res) => {
 });
 
 // Profile
-app.get("/profile", async (req, res) => {
+app.get("/profile/match", async (req, res) => {
   const { loginUser } = req.session;
 
   if (loginUser === undefined) {
     return;
   }
 
-  const query = `SELECT seq, place, link, memo, LEVEL, DATE_FORMAT(matchtime, '%Y-%m-%d') AS matchday, DATE_FORMAT(matchtime, '%H:%i') AS matchhour FROM matching WHERE match_user_seq = ${loginUser.seq}`;
+  const query = `SELECT seq, place, link, memo, LEVEL, DATE_FORMAT(matchtime, '%Y-%m-%d') AS matchday, DATE_FORMAT(matchtime, '%H:%i') AS matchhour FROM matching WHERE match_user_seq = '${loginUser.seq}'`;
 
   const matchList = await 디비실행(query);
 

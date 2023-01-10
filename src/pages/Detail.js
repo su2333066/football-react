@@ -18,7 +18,6 @@ function Detail() {
     if (process.env.NODE_ENV === "production") {
       await axios({
         url: "http://3.38.255.11:4000/detail",
-        method: "GET",
         params: {
           seq: seq,
         },
@@ -28,7 +27,6 @@ function Detail() {
     } else {
       await axios({
         url: "http://localhost:4000/detail",
-        method: "GET",
         params: {
           seq: seq,
         },
@@ -42,6 +40,7 @@ function Detail() {
 
   const 마이페이지로이동 = () => {
     if (Object.keys(loginUser).length !== 0) {
+      navigation("/Profile");
     } else {
       navigation("/Login");
     }
