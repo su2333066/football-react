@@ -47,11 +47,11 @@ function Detail() {
     }
   };
 
-  const 주소복사 = async (text) => {
+  const handleCopyClipBoard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
       alert("주소가 복사되었습니다.");
-    } catch (e) {
+    } catch (error) {
       alert("주소복사에 실패하였습니다");
     }
   };
@@ -189,9 +189,7 @@ function Detail() {
                 <p>{data.link}</p>
                 <button
                   className="address"
-                  onClick={() => {
-                    주소복사(`${data.link}`);
-                  }}
+                  onClick={() => handleCopyClipBoard(`${data.link}`)}
                 >
                   주소복사
                 </button>
