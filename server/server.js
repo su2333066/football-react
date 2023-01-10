@@ -241,7 +241,7 @@ app.get("/match", async (req, res) => {
   });
 });
 
-app.get("/profile/match", async (req, res) => {
+app.get("/profile/success", async (req, res) => {
   const { loginUser } = req.session;
 
   if (loginUser === undefined) {
@@ -256,7 +256,9 @@ app.get("/profile/match", async (req, res) => {
     return;
   }
 
-  res.send(matchList);
+  res.send({
+    matchList: matchList,
+  });
 });
 
 app.post("/match/apply", async (req, res) => {
