@@ -23,7 +23,8 @@ const Navbar = ({ myProfile, keywordSearch, setData }) => {
             ></input>
             <button
               onClick={() => {
-                myProfile();
+                // myProfile();
+                alert("준비중");
               }}
             >
               <i className="fa-regular fa-user"></i>
