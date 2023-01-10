@@ -243,6 +243,11 @@ app.get("/match", async (req, res) => {
 
 app.get("/profile", async (req, res) => {
   const { loginUser } = req.session;
+  const result = {
+    matches: undefined,
+    code: "success",
+    message: "매치목록입니다!",
+  };
 
   if (loginUser === undefined) {
     return;
@@ -251,9 +256,20 @@ app.get("/profile", async (req, res) => {
   const query = `SELECT seq, place, link, memo, LEVEL, DATE_FORMAT(matchtime, '%Y-%m-%d') AS matchday, DATE_FORMAT(matchtime, '%H:%i') AS matchhour, regdate, updatedate, user_seq, attend_user_seq, match_user_seq FROM matching WHERE user_seq = '${loginUser.seq}' ORDER BY matchtime DESC`;
 
   const matches = await 디비실행(query);
-  res.send({
-    matches: matches,
-  });
+
+  if (matches.length === 0) {
+    result.code = "fail";
+    result.message = "매치를 만들어보세요!";
+  }
+
+  if (result.code === "fail") {
+    res.send(result);
+    return;
+  }
+
+  result.matches = matches;
+
+  res.send(result);
 });
 
 app.post("/match/apply", async (req, res) => {
