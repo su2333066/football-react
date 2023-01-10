@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { StoreContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
